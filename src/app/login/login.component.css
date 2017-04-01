@@ -1,0 +1,16 @@
+div{
+    background-image: url("../../Images/loginBackground.png");
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+button{
+    display:block;
+    width: 200px;
+    height: 70px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20%;
+}
