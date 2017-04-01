@@ -11,11 +11,4 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-  loginButtonClicked = false;
-  title = 'app works!';
-  onLoginButtonPush(){
-    this.loginButtonClicked = true;
-    console.log(this.loginButtonClicked);
-  }
-
 }
