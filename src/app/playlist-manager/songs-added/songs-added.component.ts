@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SongsAddedComponent implements OnInit {
 
+  playlistName: string = "PlaylistName";
+
   constructor() { }
 
   ngOnInit() {
