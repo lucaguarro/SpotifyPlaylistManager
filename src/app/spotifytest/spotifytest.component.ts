@@ -50,7 +50,7 @@ export class SpotifytestComponent implements OnInit {
         url += '&client_id=' + encodeURIComponent(client_id);
         url += '&scope=' + encodeURIComponent(scope);
         url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-        url += '&state=' + encodeURIComponent(this.state);
+        url += '&state=' + encodeURIComponent(state);
     // this.location = url;
   }
 
