@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Song } from '../../shared/song.model';
+import { Subscription } from 'rxjs/Subscription';
+import { SongsService } from '../../shared/songs.service';
 
 @Component({
   selector: 'app-songs-added',
@@ -7,11 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SongsAddedComponent implements OnInit {
 
+  listOfSongs: Song[];
   playlistName: string = "PlaylistName";
 
-  constructor() { }
+  subscription: Subscription;
+
+  constructor(private songsService: SongsService) { }
+
+  //Get 
 
   ngOnInit() {
+    this.subscription = this.songsService.songsChanged
+      .subscribe(
+        (songs: Song[]) => {
+          this.listOfSongs = songs;
+        }
+      );
+    this.listOfSongs = this.songsService.getSongs();
   }
 
 }

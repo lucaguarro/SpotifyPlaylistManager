@@ -14,6 +14,8 @@ import { PlaylistFormComponent } from './playlist-manager/playlist-form/playlist
 import { SelectedSongViewComponent } from './playlist-manager/selected-song-view/selected-song-view.component';
 import { SongsAddedComponent } from './playlist-manager/songs-added/songs-added.component';
 import { SpotifytestComponent } from './spotifytest/spotifytest.component';
+import { SongItemComponent } from './playlist-manager/songs-added/song-item/song-item.component';
+import { SongsService } from './shared/songs.service';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     PlaylistFormComponent,
     SelectedSongViewComponent,
     SongsAddedComponent,
-    SpotifytestComponent
+    SpotifytestComponent,
+    SongItemComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, SongsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
