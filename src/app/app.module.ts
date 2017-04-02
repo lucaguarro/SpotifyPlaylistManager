@@ -13,6 +13,7 @@ import { HeaderComponent } from './playlist-manager/header/header.component';
 import { PlaylistFormComponent } from './playlist-manager/playlist-form/playlist-form.component';
 import { SelectedSongViewComponent } from './playlist-manager/selected-song-view/selected-song-view.component';
 import { SongsAddedComponent } from './playlist-manager/songs-added/songs-added.component';
+import { SpotifytestComponent } from './spotifytest/spotifytest.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     PlaylistFormComponent,
     SelectedSongViewComponent,
     SongsAddedComponent,
+    SpotifytestComponent
   ],
   imports: [
     BrowserModule,
