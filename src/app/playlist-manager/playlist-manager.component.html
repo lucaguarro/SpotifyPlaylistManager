@@ -2,12 +2,17 @@
 <app-header></app-header>
 <div class="container appParent">
     <div id="left">
-        <img src="../../assets/Images/beHUMBLE.jpg" class="testImage">
-        <app-spotifytest></app-spotifytest>
-        <app-playlist-form></app-playlist-form>
+        <div>
+            <app-selected-song-view></app-selected-song-view>
+        </div>
+        <div>
+            <app-playlist-form></app-playlist-form>
+        </div>
     </div>
     <div id="right">
         <br style="clear:both;"/>
-        <app-songs-added></app-songs-added>
+        <div>
+            <app-songs-added></app-songs-added>
+        </div>
     </div>
 </div>
