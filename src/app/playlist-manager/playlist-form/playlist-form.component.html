@@ -13,11 +13,16 @@
       <div class="col-sm-2 form-group">
       </div>
       <div class="row">
-        <div class="col-xs-12">
-<!--          <label class="custom-file">
-            <input type="file" id="file" class="custom-file-input">
-            <span class="custom-file-control"></span>
-          </label>-->
+        <div class="col-xs-12" id="uploadFile">
+          <input 
+            type="file" 
+            name="file" 
+            id="file" 
+            class="inputfile" 
+            (change)="logToConsole($event)" 
+            #fileContentInput/>
+          <label for="file">Choose a file</label>
+          <p>{{fileSelected}}</p>
         </div>
       </div>
       <div class="col-sm-2 form-group">
@@ -36,9 +41,3 @@
   </form>
 </div>
 
-
-
-<label class="custom-file">
-  <input type="file" id="file" class="custom-file-input">
-  <span class="custom-file-control"></span>
-</label>
