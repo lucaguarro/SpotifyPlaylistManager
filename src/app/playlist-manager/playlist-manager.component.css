@@ -1,0 +1,24 @@
+
+.appParent{
+    position: relative;
+
+}
+
+.appSongs{
+    position: absolute;
+    left: 0;
+}
+
+#left{
+    width: 50%;
+    height: 50%;
+    float: left;
+    border: 2px solid red;
+}
+
+#right{
+    width: 50%;
+    height: 50%;
+    float: right;
+    border: 2px solid blue;
+}

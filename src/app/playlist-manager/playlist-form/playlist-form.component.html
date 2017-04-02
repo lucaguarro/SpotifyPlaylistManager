@@ -1,43 +1,42 @@
-<div class="container">
-  <form>
-    <div class="row">
-      <div class="col-sm-5 form-group">
-        <label for="name">Playlist Name</label>
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          name="name"
-        >
-      </div>
-      <div class="col-sm-2 form-group">
-      </div>
-      <div class="row">
-        <div class="col-xs-12" id="uploadFile">
-          <input 
-            type="file" 
-            name="file" 
-            id="file" 
-            class="inputfile" 
-            (change)="logToConsole($event)" 
-            #fileContentInput/>
-          <label for="file">Choose a file</label>
-          <p>{{fileSelected}}</p>
-        </div>
-      </div>
-      <div class="col-sm-2 form-group">
-      </div>
+<form>
+  <div class="row">
+    <div class="col-sm-5 form-group">
+      <label for="name">Playlist Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        name="name"
+      >
+    </div>
+    <div class="col-sm-2 form-group">
     </div>
     <div class="row">
-      <div class="col-xs-12">
-        <button
-          class="btn btn-success"
-          type="submit">Submit</button>
-        <button class="btn btn-primary" type="button">Clear</button>
-      </div>
-      <div class="col-sm-2 form-group">
+      <div class="col-xs-12" id="uploadFile">
+        <input 
+          type="file" 
+          name="file" 
+          id="file" 
+          class="inputfile" 
+          (change)="logToConsole($event)" 
+          #fileContentInput/>
+        <label for="file">Choose a file</label>
+        <p>{{fileSelected}}</p>
       </div>
     </div>
-  </form>
-</div>
+    <div class="col-sm-2 form-group">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <button
+        class="btn btn-success"
+        type="submit">Submit</button>
+      <button class="btn btn-primary" type="button">Clear</button>
+    </div>
+    <div class="col-sm-2 form-group">
+    </div>
+  </div>
+</form>
+
 
