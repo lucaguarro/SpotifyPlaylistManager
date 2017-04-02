@@ -1,49 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { Http }    from '@angular/http';
+import { Component, OnInit }  from '@angular/core';
+import { Http }               from '@angular/http';
+import { Location }           from '@angular/common';
+
+import {SpotifytestService}   from './spotifytest.service';
+
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-spotifytest',
   templateUrl: './spotifytest.component.html',
-  styleUrls: ['./spotifytest.component.css']
+  styleUrls: ['./spotifytest.component.css'],
+  providers:[SpotifytestService]
 })
 export class SpotifytestComponent implements OnInit {
- 
-  constructor() {
-  }
+
+  private state_key : string = "spotify_auth_state";
+
+  constructor(
+    private spotify_service: SpotifytestService,
+    private location: Location
+  ) {}
 
   ngOnInit() {
-    /*
-    var state_key : string = "spotify_auth_state";
-    var state = this.generateRandomString(16);
     var params = this.getHashParams();
     var access_token = params.access_token,
         state = params.state,
-        storedState = localStorage.getItem(state_key);
+        storedState = localStorage.getItem(this.state_key);
     
     if (access_token && (state == null || state !== storedState)) {
           alert('There was an error during the authentication');
     } else {
-      localStorage.removeItem(state_key);
+      localStorage.removeItem(this.state_key);
       if (access_token) {
-        console.log("access!");
+        var obj = this.spotify_service.make_request(access_token);
+        console.log(obj);
       }
-    */  
-      /*
-      document.getElementById('login-button').addEventListener('click', function() {
-        var client_id = '376fb213682447889b3407d489e310b9'; // Your client id
-        var redirect_uri = 'http://localhost:80'; // Your redirect uri
+    }
+  }
 
-        localStorage.setItem(state_key, state);
-        var scope = 'user-read-private user-read-email';
-        var url = 'https://accounts.spotify.com/authorize';
-            url += '?response_type=token';
-            url += '&client_id=' + encodeURIComponent(client_id);
-            url += '&scope=' + encodeURIComponent(scope);
-            url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-            url += '&state=' + encodeURIComponent(state);
-            window.location = url;
-      }, false);
-    } */
+  login_clicked () {
+    var client_id = '376fb213682447889b3407d489e310b9'; // Your client id
+    var redirect_uri = 'http://localhost:4200'; // Your redirect uri
+    var state = this.generateRandomString(16);
+
+    localStorage.setItem(this.state_key, state);
+    var scope = 'user-read-private user-read-email';
+    var url = 'https://accounts.spotify.com/authorize';
+        url += '?response_type=token';
+        url += '&client_id=' + encodeURIComponent(client_id);
+        url += '&scope=' + encodeURIComponent(scope);
+        url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+        url += '&state=' + encodeURIComponent(this.state);
+    // this.location = url;
   }
 
   generateRandomString(length) {
@@ -74,15 +82,3 @@ class Hash_Parameters {
       this.state        = state;
     }
 }
-class Spotify_Request {
-  url :string = 'https://api.spotify.com/v1/me'
-
-  constructor (private http: Http) {}
-
-  get_data () {
-    return this.http.get(this.url);
-  }
-}
-/*
-  headers: { 'Authorization': 'Bearer ' + access_token}, 
- */
