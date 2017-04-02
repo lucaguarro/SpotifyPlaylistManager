@@ -1,18 +1,15 @@
 
 <app-header></app-header>
 <div class="container appParent">
-    <div id="left">
-        <div>
+    <div class="row">
+        <div class="col-md-6" id="song-view">
             <app-selected-song-view></app-selected-song-view>
         </div>
-        <div>
-            <app-playlist-form></app-playlist-form>
-        </div>
-    </div>
-    <div id="right">
-        <br style="clear:both;"/>
-        <div>
+        <div class="col-md-6 pull-right col-xs-12" id="songs-added">
             <app-songs-added></app-songs-added>
+        </div>
+        <div class="col-md-6" id="playlist-form">
+            <app-playlist-form></app-playlist-form>
         </div>
     </div>
 </div>
