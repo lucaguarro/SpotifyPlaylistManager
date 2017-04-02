@@ -25,7 +25,7 @@ export class PlaylistManagerComponent implements OnInit {
       localStorage.removeItem(this.spotifyserv.state_key);
       if (access_token) {
         var obj = this.spotifyserv.make_request(access_token);
-        console.log("Successful Request :3");
+        console.log("Successful Request :3", obj);
       }
     }
   }

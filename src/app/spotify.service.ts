@@ -3,7 +3,6 @@ import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class SpotifyService {
@@ -21,7 +20,7 @@ export class SpotifyService {
     var state = this.generateRandomString(16);
 
     localStorage.setItem(this.state_key, state);
-    var scope = 'user-read-private user-read-email';
+    var scope = 'user-read-private playlist-read-collaborative playlist-read-private';
     var url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
         url += '&client_id=' + encodeURIComponent(client_id);
@@ -73,22 +72,3 @@ class Hash_Parameters {
     this.state        = state;
   }
 }
-
-/*
-ngOnInit() {
-    var params = this.spotifyserv.getHashParams();
-    var access_token = params.access_token,
-        state = params.state,
-        storedState = localStorage.getItem(this.spotifyserv.state_key);
-    
-    if (access_token && (state == null || state !== storedState)) {
-          console.log('There was an error during the authentication');
-    } else {
-      localStorage.removeItem(this.spotifyserv.state_key);
-      if (access_token) {
-        var obj = this.spotifyserv.make_request(access_token);
-        console.log("Successful Request :3");
-      }
-    }
-  }
-*/
