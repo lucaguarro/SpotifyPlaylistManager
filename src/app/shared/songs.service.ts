@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Song } from './song.model';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class SongsService {
   songsChanged = new Subject<Song[]>();
+
+  newSongSelected = new EventEmitter<Song>();
 
   private songs: Song[] = [
     new Song(

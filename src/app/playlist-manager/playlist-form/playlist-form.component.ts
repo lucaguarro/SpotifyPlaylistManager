@@ -11,6 +11,7 @@ export class PlaylistFormComponent implements OnInit {
 
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
+  playlistName: string = "";
   fileSelected: string = "No file selected";
 
   logToConsole(){
