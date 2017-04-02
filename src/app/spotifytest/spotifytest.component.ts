@@ -1,6 +1,7 @@
 import { Component, OnInit }  from '@angular/core';
 import { Http }               from '@angular/http';
 import { Location }           from '@angular/common';
+import { Router } from '@angular/router';
 
 import {SpotifytestService}   from './spotifytest.service';
 
@@ -16,9 +17,14 @@ export class SpotifytestComponent implements OnInit {
 
   private state_key : string = "spotify_auth_state";
 
+  
+  onButtonClick(){
+    console.log("swag");
+  }
   constructor(
     private spotify_service: SpotifytestService,
-    private location: Location
+    private location: Location,
+    private router : Router
   ) {}
 
   ngOnInit() {
@@ -40,7 +46,7 @@ export class SpotifytestComponent implements OnInit {
 
   login_clicked () {
     var client_id = '376fb213682447889b3407d489e310b9'; // Your client id
-    var redirect_uri = 'http://localhost:4200'; // Your redirect uri
+    var redirect_uri = 'http://localhost:4200/playlist-manager'; // Your redirect uri
     var state = this.generateRandomString(16);
 
     localStorage.setItem(this.state_key, state);
@@ -51,7 +57,7 @@ export class SpotifytestComponent implements OnInit {
         url += '&scope=' + encodeURIComponent(scope);
         url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
         url += '&state=' + encodeURIComponent(state);
-    // this.location = url;
+    this.router.navigate(["/"]).then(result=>{window.location.href = url;});
   }
 
   generateRandomString(length) {
