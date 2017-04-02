@@ -9,6 +9,10 @@ import { LoginComponent } from './login/login.component';
 import { PlaylistManagerComponent } from './playlist-manager/playlist-manager.component';
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
+import { HeaderComponent } from './playlist-manager/header/header.component';
+import { PlaylistFormComponent } from './playlist-manager/playlist-form/playlist-form.component';
+import { SelectedSongViewComponent } from './playlist-manager/selected-song-view/selected-song-view.component';
+import { SongsAddedComponent } from './playlist-manager/songs-added/songs-added.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -19,7 +23,11 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    PlaylistManagerComponent
+    PlaylistManagerComponent,
+    HeaderComponent,
+    PlaylistFormComponent,
+    SelectedSongViewComponent,
+    SongsAddedComponent,
   ],
   imports: [
     BrowserModule,
