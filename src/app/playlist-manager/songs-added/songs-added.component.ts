@@ -27,6 +27,7 @@ export class SongsAddedComponent implements OnInit {
         }
       );
     this.listOfSongs = this.songsService.getSongs();
+    console.log(this.listOfSongs);
   }
 
 }
