@@ -22,5 +22,6 @@
       <li><a href="#">History</a></li>
       <li><a href="#">Creative computing</a></li>
       <li><a href="#">Craft, Design and Technology</a></li>
+      <li *ngFor="let songEl of listOfSongs; let i = index"><app-song-item [song]="songEl" [index]=i></app-song-item></li>
     </ul>
   </div><!--/.well -->
