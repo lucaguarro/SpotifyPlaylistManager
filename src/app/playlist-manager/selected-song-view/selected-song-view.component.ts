@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Song } from '../../shared/song.model';
 
 @Component({
   selector: 'app-selected-song-view',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./selected-song-view.component.css']
 })
 export class SelectedSongViewComponent implements OnInit {
+
+  selectedSong: Song;
 
   constructor() { }
 
