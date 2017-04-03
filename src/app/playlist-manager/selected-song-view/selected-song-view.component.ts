@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Song } from '../../shared/song.model';
+import { SongsService } from '../../shared/songs.service';
 
 @Component({
   selector: 'app-selected-song-view',
@@ -8,11 +9,24 @@ import { Song } from '../../shared/song.model';
 })
 export class SelectedSongViewComponent implements OnInit {
 
-  selectedSong: Song;
+  @Input() selectedSong: Song;
+  imageUrl: string = '';
 
-  constructor() { }
+  constructor(private songsService: SongsService) {
+    this.songsService.newSongSelected.subscribe(
+      (song: Song) => {
+        this.selectedSong = song;
+        console.log(this.selectedSong);
+       this.imageUrl = this.selectedSong["coverArtUrl"];
+      }
+    );
+  }
 
   ngOnInit() {
+  }
+
+  onSetSongTo(){
+    this.songsService.newSongSelected.emit();
   }
 
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../spotify.service';
+import { SongsService } from '../shared/songs.service';
+import { Song } from '../shared/song.model';
 
 @Component({
   selector: 'app-playlist-manager',
@@ -8,9 +10,10 @@ import { SpotifyService } from '../spotify.service';
   providers : [SpotifyService]
 })
 export class PlaylistManagerComponent implements OnInit {
-
+  selectedSong: Song;
   constructor(
-    private spotifyserv : SpotifyService
+    private spotifyserv : SpotifyService,
+    private songService: SongsService
   ) { }
 
   ngOnInit() {
@@ -28,6 +31,14 @@ export class PlaylistManagerComponent implements OnInit {
         obj.then(response => this.spotifyserv.get_playlist(response, access_token));
       }
     }
+
+    this.songService.newSongSelected
+      .subscribe(
+        (song: Song) => {
+          this.selectedSong = song;
+          console.log(this.selectedSong);
+        }
+      );
   }
 
 }
