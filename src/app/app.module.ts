@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -15,11 +14,10 @@ import { SelectedSongViewComponent } from './playlist-manager/selected-song-view
 import { SongsAddedComponent } from './playlist-manager/songs-added/songs-added.component';
 import { SongItemComponent } from './playlist-manager/songs-added/song-item/song-item.component';
 import { SongsService } from './shared/songs.service';
+import { AppRoutingModule } from './app-routing.module';
+import { SelectedViewDefaultComponent } from './playlist-manager/selected-view-default/selected-view-default.component';
 
-const appRoutes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'playlist-manager', canActivate: [AuthGuard],component: PlaylistManagerComponent }
-];
+
 
 @NgModule({
   declarations: [
@@ -30,13 +28,14 @@ const appRoutes: Routes = [
     PlaylistFormComponent,
     SelectedSongViewComponent,
     SongsAddedComponent,
-    SongItemComponent
+    SongItemComponent,
+    SelectedViewDefaultComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    AppRoutingModule
   ],
   providers: [AuthService, AuthGuard, SongsService],
   bootstrap: [AppComponent]

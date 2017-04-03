@@ -1,0 +1,13 @@
+#default{
+    background-image: url('../../../assets/Images/logo.png');
+    background-size: cover;
+    background-position: center center;
+    text-align: center;
+    height: 500px;
+    width: 500px;
+    position:relative;
+    top:0;
+    bottom:0;
+    margin: auto auto;
+    border-radius: 25px;
+}
