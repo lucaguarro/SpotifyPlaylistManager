@@ -6,9 +6,9 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SpotifyService {
-  url = 'https://api.spotify.com/v1/me';
   state_key : string = "spotify_auth_state";
-
+  user_url  : string;
+  local_playlists : Array<{}>; // make a playlist object :>
   constructor(
     private http    : Http,
     private router  : Router
@@ -49,13 +49,25 @@ export class SpotifyService {
     return new Hash_Parameters(params["access_token"], params["state"]);
   }
 
-  make_request(access_token : string): Promise<{}> {
+  get_uid (access_token : string): Promise<string> {
       var headers = new Headers({'Authorization': 'Bearer ' + access_token});
+      var url = 'https://api.spotify.com/v1/me';
       return this.http
-                 .get(this.url, {headers : headers})
+                 .get(url, {headers : headers})
                  .toPromise()
-                 .then(response => response.json())
+                 .then(response => response.json().id)
                  .catch(this.handleError);
+  }
+
+  get_playlist (uid, access_token) {
+    var headers = new Headers({'Authorization': 'Bearer ' + access_token});
+    this.user_url = "https://api.spotify.com/v1/users/" + uid + "/playlists";
+    var obj = this.http
+                  .get(this.user_url, {headers : headers})
+                  .toPromise()
+                  .then(response => this.local_playlists = response.json().items)
+                  .catch(this.handleError);
+    setTimeout(() => { console.log(this.local_playlists); }, 1000);
   }
 
   private handleError(error: any): Promise<any> {

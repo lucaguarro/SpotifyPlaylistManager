@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {SpotifyService} from '../../spotify.service';
 
 @Component({
   selector: 'app-playlist-form',
@@ -7,7 +8,9 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 })
 export class PlaylistFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private spotifyserv : SpotifyService
+  ){}
 
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
