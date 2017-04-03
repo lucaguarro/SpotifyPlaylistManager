@@ -10,7 +10,7 @@ import { SongsService } from '../../shared/songs.service';
 export class SelectedSongViewComponent implements OnInit {
 
   @Input() selectedSong: Song;
-  imageUrl: string = '';
+  imageUrl: string = '../../assets/Images/logo.png';
 
   constructor(private songsService: SongsService) {
     this.songsService.newSongSelected.subscribe(

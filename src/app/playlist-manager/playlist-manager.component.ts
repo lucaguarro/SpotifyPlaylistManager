@@ -10,7 +10,7 @@ import { Song } from '../shared/song.model';
   providers : [SpotifyService]
 })
 export class PlaylistManagerComponent implements OnInit {
-  selectedSong: Song;
+  selectedSong: Song;;
   constructor(
     private spotifyserv : SpotifyService,
     private songService: SongsService
