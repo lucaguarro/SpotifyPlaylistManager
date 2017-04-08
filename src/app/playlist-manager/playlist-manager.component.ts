@@ -7,7 +7,7 @@ import { Song } from '../shared/song.model';
   selector: 'app-playlist-manager',
   templateUrl: './playlist-manager.component.html',
   styleUrls: ['./playlist-manager.component.css'],
-  providers : [SpotifyService]
+  providers : [SpotifyService, SongsService]
 })
 export class PlaylistManagerComponent implements OnInit {
   selectedSong: Song;;
@@ -17,6 +17,15 @@ export class PlaylistManagerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.songService.newSongSelected
+      .subscribe(
+        (song: Song) => {
+          this.selectedSong = song;
+          console.log(this.selectedSong);
+        }
+      );
+
+
     var params = this.spotifyserv.getHashParams();
     var access_token = params.access_token,
         state = params.state,
@@ -32,13 +41,7 @@ export class PlaylistManagerComponent implements OnInit {
       }
     }
 
-    this.songService.newSongSelected
-      .subscribe(
-        (song: Song) => {
-          this.selectedSong = song;
-          console.log(this.selectedSong);
-        }
-      );
+
   }
 
 }

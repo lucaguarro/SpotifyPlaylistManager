@@ -9,24 +9,17 @@ import { SongsService } from '../../shared/songs.service';
 })
 export class SelectedSongViewComponent implements OnInit {
 
-  @Input() selectedSong: Song;
-  imageUrl: string = '../../assets/Images/logo.png';
+  @Input() song: Song;
 
-  constructor(private songsService: SongsService) {
-    this.songsService.newSongSelected.subscribe(
-      (song: Song) => {
-        this.selectedSong = song;
-        console.log(this.selectedSong);
-       this.imageUrl = this.selectedSong["coverArtUrl"];
-      }
-    );
-  }
+  constructor(private songsService: SongsService) {}
 
   ngOnInit() {
+    this.song = new Song(
+          'Playlist Manager',
+          'Playlist Manager',
+          '../../../assets/Images/logo.png'
+        )
   }
 
-  onSetSongTo(){
-    this.songsService.newSongSelected.emit();
-  }
 
 }

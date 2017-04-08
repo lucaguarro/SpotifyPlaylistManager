@@ -15,7 +15,6 @@ import { SongsAddedComponent } from './playlist-manager/songs-added/songs-added.
 import { SongItemComponent } from './playlist-manager/songs-added/song-item/song-item.component';
 import { SongsService } from './shared/songs.service';
 import { AppRoutingModule } from './app-routing.module';
-import { SelectedViewDefaultComponent } from './playlist-manager/selected-view-default/selected-view-default.component';
 
 
 
@@ -29,7 +28,6 @@ import { SelectedViewDefaultComponent } from './playlist-manager/selected-view-d
     SelectedSongViewComponent,
     SongsAddedComponent,
     SongItemComponent,
-    SelectedViewDefaultComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +35,7 @@ import { SelectedViewDefaultComponent } from './playlist-manager/selected-view-d
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthService, AuthGuard, SongsService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
