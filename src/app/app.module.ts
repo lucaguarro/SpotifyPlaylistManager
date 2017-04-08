@@ -15,6 +15,7 @@ import { SongsAddedComponent } from './playlist-manager/songs-added/songs-added.
 import { SongItemComponent } from './playlist-manager/songs-added/song-item/song-item.component';
 import { SongsService } from './shared/songs.service';
 import { AppRoutingModule } from './app-routing.module';
+import { AboutComponent } from './about/about.component';
 
 
 
@@ -28,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     SelectedSongViewComponent,
     SongsAddedComponent,
     SongItemComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

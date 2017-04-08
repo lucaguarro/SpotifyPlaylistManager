@@ -1,3 +1,4 @@
+import { AboutComponent } from './about/about.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
@@ -8,6 +9,7 @@ import { SelectedSongViewComponent } from './playlist-manager/selected-song-view
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full'},
+    { path: 'about', component: AboutComponent },
     { path: 'login', component: LoginComponent},
     { path: 'playlist-manager', canActivate: [AuthGuard],component: PlaylistManagerComponent,children: [
         { path: ':id', component: SelectedSongViewComponent }

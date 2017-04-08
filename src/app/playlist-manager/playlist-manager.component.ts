@@ -17,6 +17,7 @@ export class PlaylistManagerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //This function subscribes to when a new song gets selected from the song list
     this.songService.newSongSelected
       .subscribe(
         (song: Song) => {
