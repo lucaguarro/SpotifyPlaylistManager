@@ -1,3 +1,4 @@
+import { SelectedSongDefaultComponent } from './playlist-manager/selected-song-default/selected-song-default.component';
 import { AboutComponent } from './about/about.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,7 @@ const appRoutes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: 'login', component: LoginComponent},
     { path: 'playlist-manager', canActivate: [AuthGuard],component: PlaylistManagerComponent,children: [
+        { path: '', component: SelectedSongDefaultComponent },
         { path: ':id', component: SelectedSongViewComponent }
     ]  }
 ];
