@@ -86,4 +86,9 @@ export class SongsService {
     return this.songs[index];
   }
 
+  addSong(song: Song){
+      this.songs.push(song);
+      this.songsChanged.next(this.songs.slice());
+  }
+
 }

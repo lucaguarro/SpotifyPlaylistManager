@@ -1,15 +1,17 @@
 
 <a
   style="cursor: pointer;"
+  [routerLink]="[index]"
+  routerLinkActive="active"
   class="list-group-item clearfix"
-  (click)="onSelected()">
+  >
   <div class="pull-left">
-    <h4 class="list-group-item-heading">{{ song.trackName }}</h4>
-    <p class="list-group-item-text">{{ song.artistName }}</p>
+    <h4 class="list-group-item-heading">{{ song.title }}</h4>
+    <p class="list-group-item-text">{{ song.artist }}</p>
   </div>
   <span class="pull-right">
         <img
-          [src]="song.coverArtUrl"
+          [src]="song.imagePath"
           alt="{{ song.trackName }}"
           class="img-responsive"
           style="max-height: 50px;">

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Song } from '../../shared/song.model';
 import { SongsService } from '../../shared/songs.service';
 
@@ -7,26 +8,22 @@ import { SongsService } from '../../shared/songs.service';
   templateUrl: './selected-song-view.component.html',
   styleUrls: ['./selected-song-view.component.css']
 })
-export class SelectedSongViewComponent implements OnInit {
+export class SelectedSongViewComponent implements OnInit{
 
-  @Input() selectedSong: Song;
-  imageUrl: string = '';
+  song: Song;
+  id: number;
 
-  constructor(private songsService: SongsService) {
-    this.songsService.newSongSelected.subscribe(
-      (song: Song) => {
-        this.selectedSong = song;
-        console.log(this.selectedSong);
-       this.imageUrl = this.selectedSong["coverArtUrl"];
-      }
-    );
-  }
+  constructor(private songsService: SongsService,
+              private route: ActivatedRoute) {}
 
-  ngOnInit() {
-  }
-
-  onSetSongTo(){
-    this.songsService.newSongSelected.emit();
+  ngOnInit(){
+    this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.id = +params['id'];
+          this.song = this.songsService.getSong(this.id);
+        }
+      );
   }
 
 }

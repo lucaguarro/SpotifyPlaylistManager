@@ -10,7 +10,7 @@ import { SongsService } from '../../shared/songs.service';
 })
 export class SongsAddedComponent implements OnInit {
 
-  listOfSongs: Song[];
+  songs: Song[];
   playlistName: string = "PlaylistName";
 
   subscription: Subscription;
@@ -23,11 +23,11 @@ export class SongsAddedComponent implements OnInit {
     this.subscription = this.songsService.songsChanged
       .subscribe(
         (songs: Song[]) => {
-          this.listOfSongs = songs;
+          this.songs = songs;
         }
       );
-    this.listOfSongs = this.songsService.getSongs();
-    console.log(this.listOfSongs);
+    this.songs = this.songsService.getSongs();
+    console.log(this.songs);
   }
 
 }
