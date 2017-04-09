@@ -37,8 +37,8 @@ export class PlaylistManagerComponent implements OnInit {
     } else {
       localStorage.removeItem(this.spotifyserv.state_key);
       if (access_token) {
-        var obj = this.spotifyserv.get_uid(access_token);
-        obj.then(response => this.spotifyserv.get_playlist(response, access_token));
+        this.spotifyserv.get_uid(access_token);
+        // obj.then(response => this.spotifyserv.get_playlist(response, access_token));
       }
     }
 

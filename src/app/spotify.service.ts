@@ -49,15 +49,18 @@ export class SpotifyService {
     return new Hash_Parameters(params["access_token"], params["state"]);
   }
 
-  get_uid (access_token : string): Promise<string> {
+  get_uid (access_token : string) {
       var headers = new Headers({'Authorization': 'Bearer ' + access_token});
       var url = 'https://api.spotify.com/v1/me';
-      return this.http
-                 .get(url, {headers : headers})
+      var swag = "";
+      this.http.get(url, {headers : headers})
                  .toPromise()
-                 .then(response => response.json().id)
+                 .then(response => swag = response.json().id)
                  .catch(this.handleError);
+                 console.log(swag);
   }
+
+
 
   get_playlist (uid, access_token) {
     var headers = new Headers({'Authorization': 'Bearer ' + access_token});
