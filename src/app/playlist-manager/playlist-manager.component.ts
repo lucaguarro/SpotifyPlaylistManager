@@ -31,7 +31,7 @@ export class PlaylistManagerComponent implements OnInit {
     var access_token = params.access_token,
         state = params.state,
         storedState = localStorage.getItem(this.spotifyserv.state_key);
-     ''
+     
     if (access_token && (state == null || state !== storedState)) {
           console.log('There was an error during the authentication');
     } else {

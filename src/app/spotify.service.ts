@@ -1,3 +1,4 @@
+import { SongSearchParams } from './shared/song-search-params.model';
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
@@ -8,6 +9,7 @@ import 'rxjs/add/operator/toPromise';
 export class SpotifyService {
   state_key : string = "spotify_auth_state";
   user_url  : string;
+  user_id   : string;
   local_playlists : Array<{}>; // make a playlist object :>
   constructor(
     private http    : Http,
@@ -55,16 +57,19 @@ export class SpotifyService {
       var swag = "";
       this.http.get(url, {headers : headers})
                  .toPromise()
-                 .then(response => swag = response.json().id)
+                 .then(response => {this.user_id = response.json().id; console.log(this.user_id)})
                  .catch(this.handleError);
-                 console.log(swag);
+
   }
 
+  get_song (access_token: string, songSearchParams: SongSearchParams){
+    this.user_url = "https://api.spotify.com/v1/search?q=" + "artist:" + songSearchParams.artist + 
+                    "%20" + "name:" + songSearchParams.title + "&type=track";
+  }
 
-
-  get_playlist (uid, access_token) {
+  get_playlist (access_token) {
     var headers = new Headers({'Authorization': 'Bearer ' + access_token});
-    this.user_url = "https://api.spotify.com/v1/users/" + uid + "/playlists";
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists";
     var obj = this.http
                   .get(this.user_url, {headers : headers})
                   .toPromise()
