@@ -1,3 +1,4 @@
+import { SongSearchParams } from './../shared/song-search-params.model';
 import { Hash_Parameters } from './../shared/Hash_Parameters.model';
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../spotify.service';
@@ -8,11 +9,15 @@ import { Song } from '../shared/song.model';
   selector: 'app-playlist-manager',
   templateUrl: './playlist-manager.component.html',
   styleUrls: ['./playlist-manager.component.css'],
-  providers : [SpotifyService, SongsService]
+  providers: [SpotifyService, SongsService]
 })
 export class PlaylistManagerComponent implements OnInit {
   selectedSong: Song;
-  hashParams: Hash_Parameters;
+  searchedSong: Song = new Song('','','');
+  private songsearchParams: SongSearchParams = new SongSearchParams(
+    "Bohemian Rhapsody",
+    "Queen"
+  );
   constructor(
     private spotifyserv : SpotifyService,
     private songService: SongsService
@@ -20,6 +25,7 @@ export class PlaylistManagerComponent implements OnInit {
 
   ngOnInit() {
     //This function subscribes to when a new song gets selected from the song list
+
     this.songService.newSongSelected
       .subscribe(
         (song: Song) => {
@@ -28,10 +34,11 @@ export class PlaylistManagerComponent implements OnInit {
         }
       );
 
-    this.hashParams = this.spotifyserv.getHashParams();
-    var params = this.spotifyserv.getHashParams();
-    var access_token = params.access_token,
-        state = params.state,
+    //this.hashParams = this.spotifyserv.getHashParams();
+    this.spotifyserv.hash_params = this.spotifyserv.getHashParams();
+    //var params = this.spotifyserv.getHashParams();
+    var access_token = this.spotifyserv.hash_params.access_token,
+        state = this.spotifyserv.hash_params.state,
         storedState = localStorage.getItem(this.spotifyserv.state_key);
      
     if (access_token && (state == null || state !== storedState)) {
@@ -45,7 +52,18 @@ export class PlaylistManagerComponent implements OnInit {
     }
   }
   onClick(){
-    console.log(this.hashParams);
+    //this.spotifyserv.get_playlist(this.spotifyserv.hash_params.access_token);
+
+    this.spotifyserv.searchTrack(this.songsearchParams)
+      .subscribe(res => {
+        console.log(res.tracks.items[0].album.images[0].url);
+        console.log(res.tracks.items[0].name);
+        console.log(res.tracks.items[0].artists[0].name);
+        this.searchedSong.artist = res.tracks.items[0].artists[0].name;
+        this.searchedSong.title = res.tracks.items[0].name;
+        this.searchedSong.imagePath = res.tracks.items[0].album.images[0].url;
+        this.songService.addSong(this.searchedSong);
+      })
   }
 
 }

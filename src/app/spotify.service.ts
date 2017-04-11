@@ -1,16 +1,20 @@
+import { Hash_Parameters } from './shared/Hash_Parameters.model';
 import { SongSearchParams } from './shared/song-search-params.model';
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/map';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SpotifyService {
+  hash_params : Hash_Parameters;
   state_key : string = "spotify_auth_state";
   user_url  : string;
   user_id   : string;
   local_playlists : Array<{}>; // make a playlist object :>
+  song;
   constructor(
     private http    : Http,
     private router  : Router
@@ -52,9 +56,8 @@ export class SpotifyService {
   }
 
   get_uid (access_token : string) {
-      var headers = new Headers({'Authorization': 'Bearer ' + access_token});
+      var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
       var url = 'https://api.spotify.com/v1/me';
-      var swag = "";
       this.http.get(url, {headers : headers})
                  .toPromise()
                  .then(response => {this.user_id = response.json().id; console.log(this.user_id)})
@@ -62,9 +65,12 @@ export class SpotifyService {
 
   }
 
-  get_song (access_token: string, songSearchParams: SongSearchParams){
-    this.user_url = "https://api.spotify.com/v1/search?q=" + "artist:" + songSearchParams.artist + 
-                    "%20" + "name:" + songSearchParams.title + "&type=track";
+  searchTrack(searchParams: SongSearchParams, type='track'){
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    
+    this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
+    return this.http.get(this.user_url, {headers : headers})
+      .map(res => res.json());
   }
 
   get_playlist (access_token) {
@@ -78,17 +84,13 @@ export class SpotifyService {
     setTimeout(() => { console.log(this.local_playlists); }, 1000);
   }
 
+  create_playlist (access_token, playlistName: String){
+    var header = new Headers({'Authorization': 'Bearer ' + access_token});
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists";
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
-  }
-}
-
-class Hash_Parameters {
-  access_token : string;
-  state        : string;
-  constructor(access_token, state) {
-    this.access_token = access_token;
-    this.state        = state;
   }
 }

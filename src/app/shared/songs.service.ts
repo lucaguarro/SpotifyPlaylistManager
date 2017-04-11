@@ -18,57 +18,7 @@ export class SongsService {
       'So far to go',
       'J Dilla',
       '../../assets/Images/soFarToGo.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
+    )
   ]
   constructor() { }
 
