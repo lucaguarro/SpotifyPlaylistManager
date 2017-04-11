@@ -1,3 +1,4 @@
+import { Hash_Parameters } from './../shared/Hash_Parameters.model';
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../spotify.service';
 import { SongsService } from '../shared/songs.service';
@@ -11,6 +12,7 @@ import { Song } from '../shared/song.model';
 })
 export class PlaylistManagerComponent implements OnInit {
   selectedSong: Song;
+  hashParams: Hash_Parameters;
   constructor(
     private spotifyserv : SpotifyService,
     private songService: SongsService
@@ -26,7 +28,7 @@ export class PlaylistManagerComponent implements OnInit {
         }
       );
 
-
+    this.hashParams = this.spotifyserv.getHashParams();
     var params = this.spotifyserv.getHashParams();
     var access_token = params.access_token,
         state = params.state,
@@ -41,8 +43,9 @@ export class PlaylistManagerComponent implements OnInit {
         // obj.then(response => this.spotifyserv.get_playlist(response, access_token));
       }
     }
-
-
+  }
+  onClick(){
+    console.log(this.hashParams);
   }
 
 }
