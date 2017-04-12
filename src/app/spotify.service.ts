@@ -65,11 +65,13 @@ export class SpotifyService {
 
   }
 
-  searchTrack(searchParams: SongSearchParams, type='track'){
+  searchTrack(searchParams: SongSearchParams, song_queue, callback, type='track'){
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
     return this.http.get(this.user_url, {headers : headers})
-      .map(res => res.json());
+      .subscribe(callback);
+
+     // .map(res => res.json());
     /*return this.http
                 .get(this.user_url, {headers : headers})
                 .toPromise()

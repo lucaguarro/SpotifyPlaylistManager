@@ -53,19 +53,28 @@ export class PlaylistManagerComponent implements OnInit {
       for(let searchQuery of this.songService.songSearches){ 
         //var res = this.spotifyserv.searchTrack(searchQuery)
         //console.log(this.spotifyserv.searchTrack(searchQuery));
-        this.spotifyserv.searchTrack(searchQuery)
-          .subscribe(res => {
-            console.log(res.tracks.items[0].album.images[0].url);
-            console.log(res.tracks.items[0].name);
-            console.log(res.tracks.items[0].artists[0].name);
-    
-            this.searchedSong.artist = res.tracks.items[0].artists[0].name;
-            this.searchedSong.title = res.tracks.items[0].name;
-            this.searchedSong.imagePath = res.tracks.items[0].album.images[0].url;
-            console.log(this.searchedSong);
-            this.songService.addSong(this.searchedSong);
-          })
+        var song_queue = [];
+        this.spotifyserv.searchTrack(searchQuery, song_queue,
+              response => {
+                let res = response.json();
+                console.log(res.tracks.items[0].album.images[0].url);
+                console.log(res.tracks.items[0].name);
+                console.log(res.tracks.items[0].artists[0].name);
+                let searched_song = {artist : null, title : null, imagePath : null}
+                searched_song.artist = res.tracks.items[0].artists[0].name;
+                searched_song.title = res.tracks.items[0].name;
+                searched_song.imagePath = res.tracks.items[0].album.images[0].url;
+                console.log(searched_song);
+                song_queue.push(searched_song);
+              }
+        )
       }
+      setTimeout(() => {
+        console.log(song_queue); 
+        while (song_queue.length > 0) {
+          this.songService.addSong(song_queue.pop());
+        }
+    }, 1000);
     }
   
 }
