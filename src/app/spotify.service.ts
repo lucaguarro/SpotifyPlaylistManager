@@ -19,7 +19,7 @@ export class SpotifyService {
   constructor(
     private http    : Http,
     private router  : Router,
-    private songsService: SongsService
+    private songService: SongsService
   ) { }
 
   login_clicked () {
@@ -67,11 +67,21 @@ export class SpotifyService {
 
   }
 
-  searchTrack(searchParams: SongSearchParams, callback, type='track'){
+  searchTrack(searchParams: SongSearchParams, type='track'){
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
     return this.http.get(this.user_url, {headers : headers})
-      .subscribe(callback);
+      .subscribe(
+        response => {
+                var res = response.json();
+                var searched_song = {artist : null, title : null, imagePath : null}
+                searched_song.artist = res.tracks.items[0].artists[0].name;
+                searched_song.title = res.tracks.items[0].name;
+                searched_song.imagePath = res.tracks.items[0].album.images[0].url;
+                // console.log(searched_song);
+                this.songService.addSong(searched_song);
+        }
+      );
 
      // .map(res => res.json());
     /*return this.http

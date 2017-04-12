@@ -6,7 +6,7 @@ import {SpotifyService} from '../../spotify.service';
   templateUrl: './playlist-form.component.html',
   styleUrls: ['./playlist-form.component.css']
 })
-export class PlaylistFormComponent implements OnInit {
+export class PlaylistFormComponent {
 
   constructor(
     private spotifyserv : SpotifyService
@@ -17,10 +17,29 @@ export class PlaylistFormComponent implements OnInit {
   playlistName: string = "";
   fileSelected: string = "No file selected";
 
-  logToConsole(){
-    console.log(this.fileSelectedInput.nativeElement.value);
-    this.fileSelected = this.fileSelectedInput.nativeElement.value;
-    this.fileSelected = this.getJustFileName(this.fileSelected);
+  print_file_contents (event) {
+    var file   = event.target.files[0];
+    var reader = new FileReader();
+
+    var read_file = (event) => {
+      console.log(event);
+      var playlist = [];
+      var lines = event.target.result.split(/[\r\n]+/g);
+      for (var i = 0; i < lines.length; i++) {
+        var name   = lines[i].match(/.+,/g)[0];
+        var artist = lines[i].match(/,.+/g)[0];
+          if (name && artist) {
+            name   = name.slice(0, name.length-1).trim();
+            artist = artist.slice(1, artist.length).trim();
+            playlist.push({ name : name, artist: artist});
+            this.spotifyserv.searchTrack({title: name, artist: artist});
+          }
+      }
+      // console.log(JSON.stringify(playlist, null, 2));
+    }
+		
+		reader.onloadend = read_file;
+		reader.readAsText(file);
   }
 
   getJustFileName(fileWithPath: string){
@@ -35,8 +54,4 @@ export class PlaylistFormComponent implements OnInit {
     console.log(this.fileSelected);
     return justThePath;
   }
-
-  ngOnInit() {
-  }
-
 }

@@ -54,21 +54,7 @@ export class PlaylistManagerComponent implements OnInit {
         //var res = this.spotifyserv.searchTrack(searchQuery)
         //console.log(this.spotifyserv.searchTrack(searchQuery));
 
-        this.spotifyserv.searchTrack(searchQuery, 
-              response => {
-                let res = response.json();
-                console.log(res.tracks.items[0].album.images[0].url);
-                console.log(res.tracks.items[0].name);
-                console.log(res.tracks.items[0].artists[0].name);
-                let searched_song = {artist : null, title : null, imagePath : null}
-                searched_song.artist = res.tracks.items[0].artists[0].name;
-                searched_song.title = res.tracks.items[0].name;
-                searched_song.imagePath = res.tracks.items[0].album.images[0].url;
-                console.log(searched_song);
-                //song_queue.push(searched_song);
-                this.songService.addSong(searched_song);
-              }
-        )
+        this.spotifyserv.searchTrack(searchQuery);
       }
       /*setTimeout(() => {
         console.log(song_queue); 
