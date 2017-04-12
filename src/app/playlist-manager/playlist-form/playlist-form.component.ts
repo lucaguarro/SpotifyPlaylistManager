@@ -41,6 +41,11 @@ export class PlaylistFormComponent {
 		reader.onloadend = read_file;
 		reader.readAsText(file);
   }
+  updateFileName(){
+    console.log(this.fileSelectedInput.nativeElement.value);
+    this.fileSelected = this.fileSelectedInput.nativeElement.value;
+    this.fileSelected = this.getJustFileName(this.fileSelected);
+  }
 
   getJustFileName(fileWithPath: string){
     var justThePath = '';
