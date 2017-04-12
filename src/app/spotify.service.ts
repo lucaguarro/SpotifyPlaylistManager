@@ -14,6 +14,7 @@ export class SpotifyService {
   state_key : string = "spotify_auth_state";
   user_url  : string;
   user_id   : string;
+  playlist_id : string = "7oDR9gCVo4A1DpLuLueQFa";
   local_playlists : Array<{}>; // make a playlist object :>
   song;
   constructor(
@@ -75,32 +76,17 @@ export class SpotifyService {
         response => {
                 var res = response.json();
                 var searched_song = {artist : null, title : null, imagePath : null}
+                console.log(res);
                 searched_song.artist = res.tracks.items[0].artists[0].name;
                 searched_song.title = res.tracks.items[0].name;
                 searched_song.imagePath = res.tracks.items[0].album.images[0].url;
-                // console.log(searched_song);
                 this.songService.addSong(searched_song);
         }
       );
-
-     // .map(res => res.json());
-    /*return this.http
-                .get(this.user_url, {headers : headers})
-                .toPromise()
-                .then(res => res.json().items)
-                .catch(this.handleError);*/
   }
 
-  /*searchTrack2(searchParams: SongSearchParams, type='track'){
+  get_playlist () {
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-    this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
-    return new Promise((resolve, reject) => {
-
-    })
-  }*/
-
-  get_playlist (access_token) {
-    var headers = new Headers({'Authorization': 'Bearer ' + access_token});
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists";
     var obj = this.http
                   .get(this.user_url, {headers : headers})
@@ -108,6 +94,11 @@ export class SpotifyService {
                   .then(response => this.local_playlists = response.json().items)
                   .catch(this.handleError);
     setTimeout(() => { console.log(this.local_playlists); }, 1000);
+  }
+
+  add_tracks_to_playlist(){
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id;
   }
 
   create_playlist (access_token, playlistName: String){

@@ -1,3 +1,5 @@
+import { SongSearchParams } from './../../shared/song-search-params.model';
+import { SongsService } from './../../shared/songs.service';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {SpotifyService} from '../../spotify.service';
 
@@ -9,27 +11,26 @@ import {SpotifyService} from '../../spotify.service';
 export class PlaylistFormComponent {
 
   constructor(
-    private spotifyserv : SpotifyService
+    private spotifyserv : SpotifyService,
+    private songsService: SongsService
   ){}
 
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
   playlistName: string = "";
   fileSelected: string = "No file selected";
-  file: Event;
+  fileEvent: Event;
 
   saveFile(event){
-    this.file = event;
+    this.fileEvent = event;
   }
 
   print_file_contents (event) {
-    console.log("event",event);
     var file   = event.target.files[0];
     var reader = new FileReader();
     
     var read_file = (event) => {
       //console.log(event);
-      var playlist = [];
       var lines = event.target.result.split(/[\r\n]+/g);
       for (var i = 0; i < lines.length; i++) {
         var name   = lines[i].match(/.+,/g)[0];
@@ -37,8 +38,9 @@ export class PlaylistFormComponent {
           if (name && artist) {
             name   = name.slice(0, name.length-1).trim();
             artist = artist.slice(1, artist.length).trim();
-            playlist.push({ name : name, artist: artist});
-            this.spotifyserv.searchTrack({title: name, artist: artist});
+            this.songsService.songSearches.push(new SongSearchParams(name,artist));
+            //this.spotifyserv.searchTrack({title: name, artist: artist});
+            console.log(this.songsService.songSearches);
           }
       }
       // console.log(JSON.stringify(playlist, null, 2));
@@ -67,10 +69,9 @@ export class PlaylistFormComponent {
   }
 
   onSubmit(){
-    if(this.file){
-      this.print_file_contents(this.file);
-    } else{
-      window.alert("Please select a file");
+    while (this.songsService.songSearches.length){
+      this.spotifyserv.searchTrack(this.songsService.songSearches[0]);
+      this.songsService.songSearches.shift();
     }
   }
 }

@@ -13,7 +13,6 @@ import { Song } from '../shared/song.model';
 })
 export class PlaylistManagerComponent implements OnInit {
   selectedSong: Song;
-  searchedSong: Song = new Song('','','');
 
   constructor(
     private spotifyserv : SpotifyService,
@@ -49,19 +48,7 @@ export class PlaylistManagerComponent implements OnInit {
     }
   }
     onClick(){
-      //this.spotifyserv.get_playlist(this.spotifyserv.hash_params.access_token);
-      for(let searchQuery of this.songService.songSearches){ 
-        //var res = this.spotifyserv.searchTrack(searchQuery)
-        //console.log(this.spotifyserv.searchTrack(searchQuery));
-
-        this.spotifyserv.searchTrack(searchQuery);
-      }
-      /*setTimeout(() => {
-        console.log(song_queue); 
-        while (song_queue.length > 0) {
-          this.songService.addSong(song_queue.pop());
-        }
-    }, 1000);*/
+      //this.spotifyserv.get_playlist();
     }
   
 }

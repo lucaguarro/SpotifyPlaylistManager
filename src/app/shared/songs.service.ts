@@ -8,7 +8,7 @@ export class SongsService {
   songsChanged = new Subject<Song[]>();
   newSongSelected = new EventEmitter<Song>();
   public songSearches: SongSearchParams[] = [
-    new SongSearchParams(
+    /*new SongSearchParams(
       'Changes',
       '2pac'
     ),
@@ -19,7 +19,7 @@ export class SongsService {
     new SongSearchParams(
       'Could you be loved',
       'Bob Marley'
-    ),
+    ),*/
   ]
   private songs: Song[] = [
     new Song(
@@ -49,10 +49,10 @@ export class SongsService {
     return this.songs[index];
   }
 
-    addSong(song: Song){
-        this.songs.push(song);
-        this.songsChanged.next(this.songs.slice());
-    }
+  addSong(song: Song){
+      this.songs.push(song);
+      this.songsChanged.next(this.songs.slice());
+  }
 
   getSongSearches(){
     return this.songSearches.slice();
