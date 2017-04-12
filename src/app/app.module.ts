@@ -1,3 +1,4 @@
+import { SpotifyService } from './spotify.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +20,6 @@ import { AboutComponent } from './about/about.component';
 import { SelectedSongDefaultComponent } from './playlist-manager/selected-song-default/selected-song-default.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +39,7 @@ import { SelectedSongDefaultComponent } from './playlist-manager/selected-song-d
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, SpotifyService, SongsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

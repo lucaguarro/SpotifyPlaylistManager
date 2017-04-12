@@ -9,7 +9,7 @@ import { Song } from '../shared/song.model';
   selector: 'app-playlist-manager',
   templateUrl: './playlist-manager.component.html',
   styleUrls: ['./playlist-manager.component.css'],
-  providers: [SpotifyService, SongsService]
+  //providers: [SongsService]
 })
 export class PlaylistManagerComponent implements OnInit {
   selectedSong: Song;
@@ -53,8 +53,8 @@ export class PlaylistManagerComponent implements OnInit {
       for(let searchQuery of this.songService.songSearches){ 
         //var res = this.spotifyserv.searchTrack(searchQuery)
         //console.log(this.spotifyserv.searchTrack(searchQuery));
-        var song_queue = [];
-        this.spotifyserv.searchTrack(searchQuery, song_queue,
+
+        this.spotifyserv.searchTrack(searchQuery, 
               response => {
                 let res = response.json();
                 console.log(res.tracks.items[0].album.images[0].url);
@@ -65,16 +65,17 @@ export class PlaylistManagerComponent implements OnInit {
                 searched_song.title = res.tracks.items[0].name;
                 searched_song.imagePath = res.tracks.items[0].album.images[0].url;
                 console.log(searched_song);
-                song_queue.push(searched_song);
+                //song_queue.push(searched_song);
+                this.songService.addSong(searched_song);
               }
         )
       }
-      setTimeout(() => {
+      /*setTimeout(() => {
         console.log(song_queue); 
         while (song_queue.length > 0) {
           this.songService.addSong(song_queue.pop());
         }
-    }, 1000);
+    }, 1000);*/
     }
   
 }

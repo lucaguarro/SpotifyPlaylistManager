@@ -1,3 +1,4 @@
+import { SongsService } from './shared/songs.service';
 import { Hash_Parameters } from './shared/Hash_Parameters.model';
 import { SongSearchParams } from './shared/song-search-params.model';
 import { Injectable }    from '@angular/core';
@@ -17,7 +18,8 @@ export class SpotifyService {
   song;
   constructor(
     private http    : Http,
-    private router  : Router
+    private router  : Router,
+    private songsService: SongsService
   ) { }
 
   login_clicked () {
@@ -65,7 +67,7 @@ export class SpotifyService {
 
   }
 
-  searchTrack(searchParams: SongSearchParams, song_queue, callback, type='track'){
+  searchTrack(searchParams: SongSearchParams, callback, type='track'){
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
     return this.http.get(this.user_url, {headers : headers})
