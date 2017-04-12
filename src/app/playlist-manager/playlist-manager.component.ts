@@ -14,10 +14,7 @@ import { Song } from '../shared/song.model';
 export class PlaylistManagerComponent implements OnInit {
   selectedSong: Song;
   searchedSong: Song = new Song('','','');
-  private songsearchParams: SongSearchParams = new SongSearchParams(
-    "Bohemian Rhapsody",
-    "Queen"
-  );
+
   constructor(
     private spotifyserv : SpotifyService,
     private songService: SongsService
@@ -51,19 +48,24 @@ export class PlaylistManagerComponent implements OnInit {
       }
     }
   }
-  onClick(){
-    //this.spotifyserv.get_playlist(this.spotifyserv.hash_params.access_token);
-
-    this.spotifyserv.searchTrack(this.songsearchParams)
-      .subscribe(res => {
-        console.log(res.tracks.items[0].album.images[0].url);
-        console.log(res.tracks.items[0].name);
-        console.log(res.tracks.items[0].artists[0].name);
-        this.searchedSong.artist = res.tracks.items[0].artists[0].name;
-        this.searchedSong.title = res.tracks.items[0].name;
-        this.searchedSong.imagePath = res.tracks.items[0].album.images[0].url;
-        this.songService.addSong(this.searchedSong);
-      })
-  }
-
+    onClick(){
+      //this.spotifyserv.get_playlist(this.spotifyserv.hash_params.access_token);
+      for(let searchQuery of this.songService.songSearches){ 
+        //var res = this.spotifyserv.searchTrack(searchQuery)
+        //console.log(this.spotifyserv.searchTrack(searchQuery));
+        this.spotifyserv.searchTrack(searchQuery)
+          .subscribe(res => {
+            console.log(res.tracks.items[0].album.images[0].url);
+            console.log(res.tracks.items[0].name);
+            console.log(res.tracks.items[0].artists[0].name);
+    
+            this.searchedSong.artist = res.tracks.items[0].artists[0].name;
+            this.searchedSong.title = res.tracks.items[0].name;
+            this.searchedSong.imagePath = res.tracks.items[0].album.images[0].url;
+            console.log(this.searchedSong);
+            this.songService.addSong(this.searchedSong);
+          })
+      }
+    }
+  
 }

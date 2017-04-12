@@ -1,3 +1,4 @@
+import { SongSearchParams } from './song-search-params.model';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Song } from './song.model';
 import { Subject } from 'rxjs/Subject';
@@ -5,9 +6,21 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class SongsService {
   songsChanged = new Subject<Song[]>();
-
   newSongSelected = new EventEmitter<Song>();
-
+  public songSearches: SongSearchParams[] = [
+    new SongSearchParams(
+      'Changes',
+      '2pac'
+    ),
+    new SongSearchParams(
+      'Purple',
+      'Frightnrs'
+    ),
+    new SongSearchParams(
+      'Could you be loved',
+      'Bob Marley'
+    ),
+  ]
   private songs: Song[] = [
     new Song(
       'HUMBLE',
@@ -36,9 +49,13 @@ export class SongsService {
     return this.songs[index];
   }
 
-  addSong(song: Song){
-      this.songs.push(song);
-      this.songsChanged.next(this.songs.slice());
+    addSong(song: Song){
+        this.songs.push(song);
+        this.songsChanged.next(this.songs.slice());
+    }
+
+  getSongSearches(){
+    return this.songSearches.slice();
   }
 
 }

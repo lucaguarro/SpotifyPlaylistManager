@@ -67,11 +67,23 @@ export class SpotifyService {
 
   searchTrack(searchParams: SongSearchParams, type='track'){
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-    
     this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
     return this.http.get(this.user_url, {headers : headers})
       .map(res => res.json());
+    /*return this.http
+                .get(this.user_url, {headers : headers})
+                .toPromise()
+                .then(res => res.json().items)
+                .catch(this.handleError);*/
   }
+
+  /*searchTrack2(searchParams: SongSearchParams, type='track'){
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
+    return new Promise((resolve, reject) => {
+
+    })
+  }*/
 
   get_playlist (access_token) {
     var headers = new Headers({'Authorization': 'Bearer ' + access_token});
