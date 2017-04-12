@@ -16,13 +16,19 @@ export class PlaylistFormComponent {
 
   playlistName: string = "";
   fileSelected: string = "No file selected";
+  file: Event;
+
+  saveFile(event){
+    this.file = event;
+  }
 
   print_file_contents (event) {
+    console.log("event",event);
     var file   = event.target.files[0];
     var reader = new FileReader();
-
+    
     var read_file = (event) => {
-      console.log(event);
+      //console.log(event);
       var playlist = [];
       var lines = event.target.result.split(/[\r\n]+/g);
       for (var i = 0; i < lines.length; i++) {
@@ -58,5 +64,13 @@ export class PlaylistFormComponent {
     }
     console.log(this.fileSelected);
     return justThePath;
+  }
+
+  onSubmit(){
+    if(this.file){
+      this.print_file_contents(this.file);
+    } else{
+      window.alert("Please select a file");
+    }
   }
 }

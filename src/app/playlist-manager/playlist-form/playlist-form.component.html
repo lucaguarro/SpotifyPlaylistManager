@@ -22,14 +22,14 @@
           <label for="inputPlaylistName" class="col-sm-4 col-form-label">Select File:</label>
 
           <span class="btn btn-default btn-file col-sm-6">
-              {{fileSelected}} <input type="file" #fileContentInput (change)="print_file_contents($event); updateFileName(fileContentInput)">
+              {{fileSelected}} <input type="file" #fileContentInput (change)="saveFile($event); updateFileName(fileContentInput)">
           </span>
         </div>         
     </div><!--File input row-->
     <div class="row">
           <div class="text-center">
             <div class="btn-group">
-                <a class="btn btn-success">Submit</a>
+                <a class="btn btn-success" (click)="onSubmit()">Submit</a>
                 <a class="btn btn-primary">Clear!</a>
             </div>
           </div>
