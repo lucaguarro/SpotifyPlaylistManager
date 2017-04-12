@@ -69,6 +69,9 @@ export class PlaylistFormComponent {
   }
 
   onSubmit(){
+    /*for (let songQuery of this.songsService.songSearches){
+      this.spotifyserv.searchTrack(songQuery);
+    }*/
     while (this.songsService.songSearches.length){
       this.spotifyserv.searchTrack(this.songsService.songSearches[0]);
       this.songsService.songSearches.shift();

@@ -22,7 +22,7 @@ export class SongsService {
     ),*/
   ]
   private songs: Song[] = [
-    new Song(
+    /*new Song(
       'HUMBLE',
       'Kendrick Lamar',
       '../../assets/Images/beHUMBLE.jpg'
@@ -31,7 +31,7 @@ export class SongsService {
       'So far to go',
       'J Dilla',
       '../../assets/Images/soFarToGo.jpg'
-    )
+    )*/
   ]
   constructor() { }
 

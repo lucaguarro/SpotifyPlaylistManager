@@ -48,7 +48,10 @@ export class PlaylistManagerComponent implements OnInit {
     }
   }
     onClick(){
-      //this.spotifyserv.get_playlist();
+      this.spotifyserv.add_tracks_to_playlist();
+    }
+    get_playlist (){
+      this.spotifyserv.get_playlist();
     }
   
 }
