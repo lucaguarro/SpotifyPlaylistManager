@@ -99,17 +99,18 @@ export class SpotifyService {
 
   add_tracks_to_playlist(){
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    headers.append('Accept', 'application/json');
+    console.log(headers);
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks?uris="; 
     let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
+    let songIDs : String [];
     for (var i = 0; i < songs.length; i++){
-      if(i != songs.length - 1){
-        this.user_url = this.user_url + "spotify:track:" + songs[i].spotifyID + ",";
-      }else{
-        this.user_url = this.user_url + "spotify:track:" + songs[i].spotifyID;
-      }
+      console.log("songids",songs[i].spotifyID);
+      songIDs.push("spotify:track:" + songs[i].spotifyID);
     }
+    let body = {"uris": songIDs};
     console.log(this.user_url);
-    return this.http.post(this.user_url, {headers : headers});
+    return this.http.post(this.user_url, body, {headers : headers});
   }
 
   create_playlist (access_token, playlistName: String){

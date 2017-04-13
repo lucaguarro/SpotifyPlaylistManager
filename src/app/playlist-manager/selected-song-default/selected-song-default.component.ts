@@ -14,7 +14,8 @@ export class SelectedSongDefaultComponent implements OnInit {
     this.songTemplate = new Song(
           'Playlist Manager',
           'Playlist Manager',
-          '../../../assets/Images/logo.png'
+          '../../../assets/Images/logo.png',
+          ''
         )
   }
 
