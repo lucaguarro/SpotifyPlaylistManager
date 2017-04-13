@@ -103,14 +103,19 @@ export class SpotifyService {
     console.log(headers);
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks?uris="; 
     let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
-    let songIDs : String [];
+    let songIDs : String [] = [];
     for (var i = 0; i < songs.length; i++){
       console.log("songids",songs[i].spotifyID);
       songIDs.push("spotify:track:" + songs[i].spotifyID);
     }
     let body = {"uris": songIDs};
     console.log(this.user_url);
-    return this.http.post(this.user_url, body, {headers : headers});
+    console.log(body);
+    this.http
+        .post(this.user_url, body, {headers : headers})
+        .toPromise()
+        .then(response => console.log(response))
+        .catch(this.handleError);
   }
 
   create_playlist (access_token, playlistName: String){
