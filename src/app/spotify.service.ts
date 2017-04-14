@@ -68,23 +68,24 @@ export class SpotifyService {
 
   }
 
-    searchTrack(searchParams: SongSearchParams, type='track'){
-      var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-      this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
-      return this.http.get(this.user_url, {headers : headers})
-        .toPromise()
-        .then(
-          response => {
-                  var res = response.json();
-                  var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
-                  searched_song.artist = res.tracks.items[0].artists[0].name;
-                  searched_song.title = res.tracks.items[0].name;
-                  searched_song.imagePath = res.tracks.items[0].album.images[0].url;
-                  searched_song.spotifyID = res.tracks.items[0].id;
-                  this.songsService.addSong(searched_song);
-          }
-        );
-    }
+  searchTrack(searchParams: SongSearchParams, type='track'){
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
+    return this.http.get(this.user_url, {headers : headers})
+      .toPromise()
+      .then(
+        response => {
+                var res = response.json();
+                var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
+                searched_song.artist = res.tracks.items[0].artists[0].name;
+                searched_song.title = res.tracks.items[0].name;
+                searched_song.imagePath = res.tracks.items[0].album.images[0].url;
+                searched_song.spotifyID = res.tracks.items[0].id;
+                this.songsService.addSong(searched_song);
+        }
+      );
+  }
+
 
   get_playlist () {
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
@@ -130,9 +131,19 @@ export class SpotifyService {
           .catch(this.handleError);
     }
 
-  create_playlist (access_token, playlistName: String){
-    var header = new Headers({'Authorization': 'Bearer ' + access_token});
+  create_playlist (playlistName: String){
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    headers.append('Content-Type', 'application/json');
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists";
+    //let body = "name\" + playlistName;
+    var body = {name : null, public : null};
+    body.name = playlistName;
+    body.public = true;
+    return this.http
+          .post(this.user_url, JSON.stringify(body), {headers : headers})
+          .toPromise()
+          .then(response => console.log(response))
+          .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
