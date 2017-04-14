@@ -47,8 +47,8 @@ export class PlaylistManagerComponent implements OnInit {
       }
     }
   }
-    onClick(){
-      this.spotifyserv.get_playlist();
-    }
+    /*onClick(){
+      this.spotifyserv.get_playlist("PlaylistantTest");
+    }*/
   
 }

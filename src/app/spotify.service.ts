@@ -12,10 +12,11 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class SpotifyService {
   hash_params : Hash_Parameters;
+  playlistOffset : number = 0;
   state_key : string = "spotify_auth_state";
   user_url  : string;
   user_id   : string;
-  playlist_id : string = "0NvZ1eA6qo1jBk1BigahyX";
+  playlist_id : string; //0NvZ1eA6qo1jBk1BigahyX
   local_playlists : Array<{}>; // make a playlist object :>
   song;
   constructor(
@@ -87,18 +88,29 @@ export class SpotifyService {
   }
 
 
-  get_playlist () {
+  get_playlist (playlistName: string) {
+    var songFound = false;
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists";
-    var obj = this.http
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + this.playlistOffset;
+    return this.http
                   .get(this.user_url, {headers : headers})
                   .toPromise()
                   .then(
-                      (response) => {this.local_playlists = response.json().items;
-                                  console.log(this.local_playlists);
-                                  console.log(this.local_playlists[0]);
-                                  for(var i = 0; i < this.local_playlists.length; i++){
-                                    //if(this.local_playlists[0].name)
+                      (response) => {
+                                  var res = response.json().items;
+                                  console.log(res);
+                                  console.log(res[0].name);
+                                  for(var i = 0; i < res.length; i++){
+                                    if(res[i].name == playlistName){
+                                      songFound = true;
+                                      this.playlistOffset = 0;
+                                      this.playlist_id = res[i].id;
+                                      console.log("yoooo", res[i].id);
+                                    }
+                                  }
+                                  if(!songFound){
+                                    this.playlistOffset += 50;
+                                    this.get_playlist(playlistName);
                                   }
                                   
                       })
