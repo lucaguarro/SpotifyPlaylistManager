@@ -68,22 +68,23 @@ export class SpotifyService {
 
   }
 
-  searchTrack(searchParams: SongSearchParams, type='track'){
-    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-    this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
-    return this.http.get(this.user_url, {headers : headers})
-      .subscribe(
-        response => {
-                var res = response.json();
-                var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
-                searched_song.artist = res.tracks.items[0].artists[0].name;
-                searched_song.title = res.tracks.items[0].name;
-                searched_song.imagePath = res.tracks.items[0].album.images[0].url;
-                searched_song.spotifyID = res.tracks.items[0].id;
-                this.songsService.addSong(searched_song);
-        }
-      );
-  }
+    searchTrack(searchParams: SongSearchParams, type='track'){
+      var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+      this.user_url = "https://api.spotify.com/v1/search?query="+searchParams.artist+' '+searchParams.title+"&offset=0&limit=1&type="+type+"&market=US";
+      return this.http.get(this.user_url, {headers : headers})
+        .toPromise()
+        .then(
+          response => {
+                  var res = response.json();
+                  var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
+                  searched_song.artist = res.tracks.items[0].artists[0].name;
+                  searched_song.title = res.tracks.items[0].name;
+                  searched_song.imagePath = res.tracks.items[0].album.images[0].url;
+                  searched_song.spotifyID = res.tracks.items[0].id;
+                  this.songsService.addSong(searched_song);
+          }
+        );
+    }
 
   get_playlist () {
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
@@ -96,20 +97,32 @@ export class SpotifyService {
     setTimeout(() => { console.log(this.local_playlists); }, 1000);
   }
 
+  /*add_track_to_playlist(songID: String){
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    headers.append('Accept', 'application/json');
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; //playlist_id is hardcoded rn. needs to be added dynamically
+    let songIDs: String [] = [];
+    songIDs.push("spotify:track:" + songID);
+    let body = {"uris": songIDs};
+    console.log(this.user_url);
+    console.log(body);
+    this.http
+        .post(this.user_url, JSON.stringify(body), {headers : headers})
+        .toPromise()
+        .then(response => console.log(response))
+        .catch(this.handleError);
+  }*/
+
     add_tracks_to_playlist(){
       var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
       headers.append('Accept', 'application/json');
-      console.log(headers);
       this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; 
       let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
       let songIDs : String [] = [];
       for (var i = 0; i < songs.length; i++){
-        console.log("songids",songs[i].spotifyID);
         songIDs.push("spotify:track:" + songs[i].spotifyID);
       }
       let body = {"uris": songIDs};
-      console.log(this.user_url);
-      console.log(body);
       this.http
           .post(this.user_url, JSON.stringify(body), {headers : headers})
           .toPromise()
