@@ -93,9 +93,17 @@ export class SpotifyService {
     var obj = this.http
                   .get(this.user_url, {headers : headers})
                   .toPromise()
-                  .then(response => this.local_playlists = response.json().items)
+                  .then(
+                      (response) => {this.local_playlists = response.json().items;
+                                  console.log(this.local_playlists);
+                                  console.log(this.local_playlists[0]);
+                                  for(var i = 0; i < this.local_playlists.length; i++){
+                                    //if(this.local_playlists[0].name)
+                                  }
+                                  
+                      })
                   .catch(this.handleError);
-    setTimeout(() => { console.log(this.local_playlists); }, 1000);
+    //setTimeout(() => { console.log(this.local_playlists); }, 1000);
   }
 
   /*add_track_to_playlist(songID: String){
