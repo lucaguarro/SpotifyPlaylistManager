@@ -76,13 +76,22 @@ export class SpotifyService {
       .toPromise()
       .then(
         response => {
-                var res = response.json();
+              var res = response.json();
+              if(res.tracks.items[0]){
                 var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
                 searched_song.artist = res.tracks.items[0].artists[0].name;
                 searched_song.title = res.tracks.items[0].name;
                 searched_song.imagePath = res.tracks.items[0].album.images[0].url;
                 searched_song.spotifyID = res.tracks.items[0].id;
                 this.songsService.addSong(searched_song);
+              } else{
+                var song_not_found = {artist : null, title : null, imagePath : null, spotifyID : null}
+                song_not_found.artist = searchParams.artist;
+                song_not_found.title = searchParams.title;
+                song_not_found.imagePath = "../../assets/Images/notFound.png";
+                song_not_found.spotifyID = "Song not found";
+                this.songsService.addSong(song_not_found);
+              }
         }
       );
   }
@@ -141,7 +150,9 @@ export class SpotifyService {
       let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
       let songIDs : String [] = [];
       for (var i = 0; i < songs.length; i++){
-        songIDs.push("spotify:track:" + songs[i].spotifyID);
+        if(songs[i].spotifyID != "Song not found"){
+          songIDs.push("spotify:track:" + songs[i].spotifyID);
+        }
       }
       let body = {"uris": songIDs};
       this.http
