@@ -23,16 +23,16 @@ export class PlaylistFormComponent {
   fileEvent: Event;
 
   onSubmit(form: NgForm){
-    //console.log(form);
     console.log(this.playlistForm.value.playlistName);
-    /*const searchPromises: Promise<void>[] = [];
+    this.spotifyserv.create_playlist(this.playlistForm.value.playlistName);
+    const searchPromises: Promise<void>[] = [];
     while (this.songsService.songSearches.length){
       searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
       this.songsService.songSearches.shift();
     }
     //Needs to wait until all requests ^ have been completed
     Promise.all(searchPromises)
-      .then(() => this.spotifyserv.add_tracks_to_playlist());*/
+      .then(() => this.spotifyserv.add_tracks_to_playlist());
   }
 
   saveFile(event){
