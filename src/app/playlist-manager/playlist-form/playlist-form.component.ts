@@ -1,7 +1,8 @@
 import { SongSearchParams } from './../../shared/song-search-params.model';
 import { SongsService } from './../../shared/songs.service';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {SpotifyService} from '../../spotify.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-playlist-form',
@@ -14,12 +15,25 @@ export class PlaylistFormComponent {
     private spotifyserv : SpotifyService,
     private songsService: SongsService
   ){}
-
+  @ViewChild('f') playlistForm: NgForm;
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
   playlistName: string = "";
   fileSelected: string = "No file selected";
   fileEvent: Event;
+
+  onSubmit(form: NgForm){
+    //console.log(form);
+    console.log(this.playlistForm.value.playlistName);
+    /*const searchPromises: Promise<void>[] = [];
+    while (this.songsService.songSearches.length){
+      searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
+      this.songsService.songSearches.shift();
+    }
+    //Needs to wait until all requests ^ have been completed
+    Promise.all(searchPromises)
+      .then(() => this.spotifyserv.add_tracks_to_playlist());*/
+  }
 
   saveFile(event){
     this.fileEvent = event;
@@ -68,14 +82,5 @@ export class PlaylistFormComponent {
     return justThePath;
   }
 
-    onSubmit(){
-      const searchPromises: Promise<void>[] = [];
-      while (this.songsService.songSearches.length){
-        searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
-        this.songsService.songSearches.shift();
-      }
-      //Needs to wait until all requests ^ have been completed
-      Promise.all(searchPromises)
-        .then(() => this.spotifyserv.add_tracks_to_playlist());
-    }
+
 }
