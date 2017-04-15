@@ -44,14 +44,13 @@ export class PlaylistFormComponent {
         })
       })
     ;
-/*    const searchPromises: Promise<void>[] = [];
-    while (this.songsService.songSearches.length){
-      searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
-      this.songsService.songSearches.shift();
-    }
-    //Needs to wait until all requests ^ have been completed
-    Promise.all(searchPromises)
-      .then(() => this.spotifyserv.add_tracks_to_playlist());*/
+  }
+
+  onClear(){
+    //this.playlistForm.value.playlistName.set = '';
+    this.playlistForm.reset();
+    this.songsService.songSearches = [];
+    this.fileSelected = "No file selected";
   }
 
   saveFile(event){

@@ -10,9 +10,12 @@
                   id="inputPlaylistName"
                   type="text"
                   class="form-control swagoo"              
-                  ngModel
+                  ngModel 
                   name="playlistName"
+                  required
+                  #playlistName="ngModel"
               >
+              <span class="help-block" *ngIf="!playlistName.valid && playlistName.touched">Please enter a playlist name!</span>
             </div>
         </div>
     </div><!--Playlist name row-->
@@ -29,8 +32,8 @@
     <div class="row">
           <div class="text-center">
             <div class="btn-group">
-                <button class="btn btn-success" type="submit">Submit</button>
-                <button class="btn btn-primary">Clear!</button>
+                <button class="btn btn-success" type="submit" [disabled]="f.invalid">Submit</button>
+                <button class="btn btn-primary" type="reset" (click)="onClear()">Clear!</button>
             </div>
           </div>
     </div><!--Button row-->
