@@ -13,7 +13,6 @@ import 'rxjs/add/operator/toPromise';
 export class SpotifyService {
   hash_params : Hash_Parameters;
   playlistOffset : number = 0;
-  songOffset : number = 0;
   state_key : string = "spotify_auth_state";
   user_url  : string;
   user_id   : string;
@@ -131,22 +130,20 @@ export class SpotifyService {
                   .catch(this.handleError);
   }
 
-    add_tracks_to_playlist(){
+    add_tracks_to_playlist(songOffset: number){
       var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
       headers.append('Accept', 'application/json');
       this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; 
       let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
       let songIDs : String [] = [];
       var numSongsToAdd;
-      if((songs.length - this.songOffset) > 100){
+      if((songs.length - songOffset) > 100){
         numSongsToAdd = 100;
-        this.songOffset += 100;
-        this.add_tracks_to_playlist();
       } else{
         numSongsToAdd = songs.length;
       }
       
-      for (var i = this.songOffset; i < numSongsToAdd; i++){
+      for (var i = songOffset; i < numSongsToAdd + songOffset; i++){
         if(songs[i].spotifyID != "Song not found"){
           songIDs.push("spotify:track:" + songs[i].spotifyID);
         }

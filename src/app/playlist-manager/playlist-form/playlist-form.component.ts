@@ -35,7 +35,12 @@ export class PlaylistFormComponent {
             }
             //Needs to wait until all requests ^ have been completed
             Promise.all(searchPromises)
-              .then(() => this.spotifyserv.add_tracks_to_playlist());
+              .then(() => {
+                    for(var i = 0; i < searchPromises.length; i += 100){
+                      this.spotifyserv.add_tracks_to_playlist(i)
+                    }
+                  }
+              );
         })
       })
     ;
