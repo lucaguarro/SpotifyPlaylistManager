@@ -82,10 +82,10 @@ export class SpotifyService {
                 var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
                 searched_song.artist = res.tracks.items[0].artists[0].name;
                 searched_song.title = res.tracks.items[0].name;
-                if(res.tracks.items[0].album.images[0].url){
+                if(res.tracks.items[0].album.images[0]){
                   searched_song.imagePath = res.tracks.items[0].album.images[0].url;
                 } else{
-                  searched_song.imagePath ="";
+                  searched_song.imagePath = "../../assets/Images/No_image.png";
                 }
                 searched_song.spotifyID = res.tracks.items[0].id;
                 this.songsService.addSong(searched_song);
@@ -129,29 +129,11 @@ export class SpotifyService {
                                   
                       })
                   .catch(this.handleError);
-    //setTimeout(() => { console.log(this.local_playlists); }, 1000);
   }
-
-  /*add_track_to_playlist(songID: String){
-    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-    headers.append('Accept', 'application/json');
-    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; //playlist_id is hardcoded rn. needs to be added dynamically
-    let songIDs: String [] = [];
-    songIDs.push("spotify:track:" + songID);
-    let body = {"uris": songIDs};
-    console.log(this.user_url);
-    console.log(body);
-    this.http
-        .post(this.user_url, JSON.stringify(body), {headers : headers})
-        .toPromise()
-        .then(response => console.log(response))
-        .catch(this.handleError);
-  }*/
 
     add_tracks_to_playlist(){
       var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
       headers.append('Accept', 'application/json');
-      headers.append('Retry-After', '10');
       this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; 
       let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
       let songIDs : String [] = [];
