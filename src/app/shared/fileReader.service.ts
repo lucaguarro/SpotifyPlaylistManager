@@ -10,8 +10,7 @@ export class FileReaderService {
     				if (name && artist) {
     						name   = name.slice(0, name.length-1).trim();
     						artist = artist.slice(1, artist.length).trim();
-    						//playlist.push(new SongSearchParams(name, artist));
-							playlist.push(new SongSearchParams(artist, name));
+							playlist.push(new SongSearchParams(name, artist));
     				}
     		}
     		document.getElementById("output_1").innerHTML = JSON.stringify(playlist, null, 2);

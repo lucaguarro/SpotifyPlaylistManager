@@ -82,7 +82,7 @@ export class SpotifyService {
                 var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
                 searched_song.artist = res.tracks.items[0].artists[0].name;
                 searched_song.title = res.tracks.items[0].name;
-                if(searched_song.imagePath = res.tracks.items[0].album.images[0].url){
+                if(res.tracks.items[0].album.images[0].url){
                   searched_song.imagePath = res.tracks.items[0].album.images[0].url;
                 } else{
                   searched_song.imagePath ="";
