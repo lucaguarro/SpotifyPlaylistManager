@@ -7,32 +7,8 @@ import { Subject } from 'rxjs/Subject';
 export class SongsService {
   songsChanged = new Subject<Song[]>();
   newSongSelected = new EventEmitter<Song>();
-  public songSearches: SongSearchParams[] = [
-    /*new SongSearchParams(
-      'Changes',
-      '2pac'
-    ),
-    new SongSearchParams(
-      'Purple',
-      'Frightnrs'
-    ),
-    new SongSearchParams(
-      'Could you be loved',
-      'Bob Marley'
-    ),*/
-  ]
-  private songs: Song[] = [
-    /*new Song(
-      'HUMBLE',
-      'Kendrick Lamar',
-      '../../assets/Images/beHUMBLE.jpg'
-    ),
-    new Song(
-      'So far to go',
-      'J Dilla',
-      '../../assets/Images/soFarToGo.jpg'
-    )*/
-  ]
+  public songSearches: SongSearchParams[] = []
+  private songs: Song[] = []
   constructor() { }
 
   setSongs(songs: Song[]){

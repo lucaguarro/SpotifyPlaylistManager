@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../spotify.service';
 import { SongsService } from '../shared/songs.service';
 import { Song } from '../shared/song.model';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-playlist-manager',
@@ -16,7 +17,9 @@ export class PlaylistManagerComponent implements OnInit {
 
   constructor(
     private spotifyserv : SpotifyService,
-    private songService: SongsService
+    private songService: SongsService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -47,8 +50,9 @@ export class PlaylistManagerComponent implements OnInit {
       }
     }
   }
-    /*onClick(){
-      this.spotifyserv.get_playlist("PlaylistantTest");
-    }*/
+    onClick(){
+      console.log(this.router.url);
+      console.log("router", this.route);
+    }
   
 }
