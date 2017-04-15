@@ -13,6 +13,7 @@ import 'rxjs/add/operator/toPromise';
 export class SpotifyService {
   hash_params : Hash_Parameters;
   playlistOffset : number = 0;
+  songOffset : number = 0;
   state_key : string = "spotify_auth_state";
   user_url  : string;
   user_id   : string;
@@ -81,7 +82,11 @@ export class SpotifyService {
                 var searched_song = {artist : null, title : null, imagePath : null, spotifyID : null}
                 searched_song.artist = res.tracks.items[0].artists[0].name;
                 searched_song.title = res.tracks.items[0].name;
-                searched_song.imagePath = res.tracks.items[0].album.images[0].url;
+                if(searched_song.imagePath = res.tracks.items[0].album.images[0].url){
+                  searched_song.imagePath = res.tracks.items[0].album.images[0].url;
+                } else{
+                  searched_song.imagePath ="";
+                }
                 searched_song.spotifyID = res.tracks.items[0].id;
                 this.songsService.addSong(searched_song);
               } else{
@@ -146,10 +151,20 @@ export class SpotifyService {
     add_tracks_to_playlist(){
       var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
       headers.append('Accept', 'application/json');
+      headers.append('Retry-After', '10');
       this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; 
       let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
       let songIDs : String [] = [];
-      for (var i = 0; i < songs.length; i++){
+      var numSongsToAdd;
+      if((songs.length - this.songOffset) > 100){
+        numSongsToAdd = 100;
+        this.songOffset += 100;
+        this.add_tracks_to_playlist();
+      } else{
+        numSongsToAdd = songs.length;
+      }
+      
+      for (var i = this.songOffset; i < numSongsToAdd; i++){
         if(songs[i].spotifyID != "Song not found"){
           songIDs.push("spotify:track:" + songs[i].spotifyID);
         }

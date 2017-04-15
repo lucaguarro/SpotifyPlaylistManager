@@ -68,7 +68,7 @@ export class PlaylistFormComponent {
             artist = artist.slice(1, artist.length).trim();
             this.songsService.songSearches.push(new SongSearchParams(name,artist));
             //this.spotifyserv.searchTrack({title: name, artist: artist});
-            console.log(this.songsService.songSearches);
+            //console.log(this.songsService.songSearches);
           }
       }
       // console.log(JSON.stringify(playlist, null, 2));
