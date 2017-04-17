@@ -1,7 +1,7 @@
 
   <div class="well sidebar-nav">
     <ul class="nav">
-      <li><strong>Songs added to playlist: {{playlistName}}</strong></li>
+      <li><strong>Songs added to playlist: <span [innerHTML] = "playlistName"></span></strong></li>
       <li *ngFor="let songEl of songs; let i = index"><app-song-item [song]="songEl" [index]="i"></app-song-item></li>
     </ul>
   </div><!--/.well -->

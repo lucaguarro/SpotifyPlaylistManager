@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Song } from '../../shared/song.model';
 import { Subscription } from 'rxjs/Subscription';
 import { SongsService } from '../../shared/songs.service';
@@ -11,7 +11,7 @@ import { SongsService } from '../../shared/songs.service';
 export class SongsAddedComponent implements OnInit {
 
   songs: Song[];
-  playlistName: string = "PlaylistName";
+  @Input() playlistName: string = "";
 
   subscription: Subscription;
 
@@ -20,6 +20,13 @@ export class SongsAddedComponent implements OnInit {
   //Get 
 
   ngOnInit() {
+    this.subscription = this.songsService.playlistCreated
+      .subscribe(
+        (playlistName: string)=>{
+          this.playlistName = playlistName;
+          console.log("heyy",this.playlistName);
+        }
+      )
     this.subscription = this.songsService.songsChanged
       .subscribe(
         (songs: Song[]) => {

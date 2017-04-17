@@ -1,6 +1,6 @@
 import { SongSearchParams } from './../../shared/song-search-params.model';
 import { SongsService } from './../../shared/songs.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import {SpotifyService} from '../../spotify.service';
 import { NgForm } from '@angular/forms';
 
@@ -18,11 +18,11 @@ export class PlaylistFormComponent {
   @ViewChild('f') playlistForm: NgForm;
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
-  playlistName: string = "";
   fileSelected: string = "No file selected";
   fileEvent: Event;
 
   onSubmit(form: NgForm){
+    this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
     console.log(this.playlistForm.value.playlistName);
     this.spotifyserv.create_playlist(this.playlistForm.value.playlistName)
       .then(()=> {
