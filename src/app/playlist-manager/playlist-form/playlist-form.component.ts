@@ -1,8 +1,10 @@
+import { PlaylistsDialogComponent } from './playlists-dialog/playlists-dialog.component';
 import { SongSearchParams } from './../../shared/song-search-params.model';
 import { SongsService } from './../../shared/songs.service';
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import {SpotifyService} from '../../spotify.service';
 import { NgForm } from '@angular/forms';
+import {MdDialog} from '@angular/material';
 
 @Component({
   selector: 'app-playlist-form',
@@ -13,14 +15,22 @@ export class PlaylistFormComponent {
 
   constructor(
     private spotifyserv : SpotifyService,
-    private songsService: SongsService
+    private songsService: SongsService,
+    public dialog: MdDialog
   ){}
   @ViewChild('f') playlistForm: NgForm;
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
-
+  selectedOption: string;
   playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
   fileEvent: Event;
+
+  openDialog() {
+    let dialogRef = this.dialog.open(PlaylistsDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.selectedOption = result;
+    });
+  }
 
   onSubmit(form: NgForm){
     this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
