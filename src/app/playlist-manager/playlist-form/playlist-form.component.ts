@@ -18,6 +18,7 @@ export class PlaylistFormComponent {
   @ViewChild('f') playlistForm: NgForm;
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
+  playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
   fileEvent: Event;
 
