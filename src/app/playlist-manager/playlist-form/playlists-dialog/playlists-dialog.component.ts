@@ -19,11 +19,18 @@ export class PlaylistsDialogComponent implements OnInit {
         var res = response.json().items;
         console.log(res);
         for(var i = 0; i < res.length; i++){
+          if(res[i].name.length > 50){
+            res[i].name = res[i].name.substring(0,50);
+          }
           let playlist: Playlist = new Playlist(res[i].name, res[i].id);
           this.playlists.push(playlist);
         }
       }
     );  
+  }
+
+  setPlaylist(playlistId: string){
+    console.log(playlistId);
   }
 
 }

@@ -1,5 +1,15 @@
-<h1 md-dialog-title>Dialog</h1>
-<div md-dialog-content>What would you like to do?</div>
-<div *ngFor="let playlist of playlists; let i = index">
+<h1 md-dialog-title>Which playlist?</h1>
+<!--<div *ngFor="let playlist of playlists; let i = index">
   <button md-button (click)="dialogRef.close('Option 1')">{{playlist.title}}</button>
+</div>-->
+
+<div  class="scrollable-menu fixSize" role="menu">
+    <div *ngFor="let playlist of playlists; let i = index">
+      <div class="col-md-6">
+        <button *ngIf="i%2 === 0" md-button (click)="dialogRef.close(playlist)">{{i+1}}. {{playlist.title}}</button>
+      </div>
+      <div class="col-md-6">
+        <button *ngIf="i%2 !== 0" md-button (click)="dialogRef.close(playlist)">{{i}}. {{playlist.title}}</button>
+      </div>
+    </div>
 </div>

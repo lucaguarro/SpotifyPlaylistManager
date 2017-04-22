@@ -1,6 +1,11 @@
 .width{
-    width: 200px;
+    width: 1000px;
 }
 button{
     display: list-item;
+}
+
+.fixSize{
+    height: 200px;
+    width: 800px;
 }

@@ -1,3 +1,4 @@
+import { Playlist } from './../../shared/playlist.model';
 import { PlaylistsDialogComponent } from './playlists-dialog/playlists-dialog.component';
 import { SongSearchParams } from './../../shared/song-search-params.model';
 import { SongsService } from './../../shared/songs.service';
@@ -21,8 +22,9 @@ export class PlaylistFormComponent {
   @ViewChild('f') playlistForm: NgForm;
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
 
+  createNew: boolean = true;
   playlistOffset: number = 0;
-  selectedOption: string;
+  selectedPlaylist: Playlist;
   playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
   fileEvent: Event;
@@ -30,13 +32,20 @@ export class PlaylistFormComponent {
   openDialog() {
     let dialogRef = this.dialog.open(PlaylistsDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.selectedOption = result;
+      this.selectedPlaylist = result;
+      if(this.selectedPlaylist){
+        console.log("kobeee");
+        this.playlistForm.value.playlistName = this.selectedPlaylist.title;
+      }
     });
   }
   radioChanged(option: string){
     console.log("uo", option);
     if(option == "Append to existing"){
+      this.createNew = false;
       this.openDialog();
+    } else{
+      this.createNew = true;
     }
   }
 
@@ -63,31 +72,34 @@ export class PlaylistFormComponent {
 
   onSubmit(form: NgForm){
 
-
-    this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
-    console.log(this.playlistForm.value.playlistName);
-    this.spotifyserv.create_playlist(this.playlistForm.value.playlistName)
-      .then(()=> {
-        this.spotifyserv.get_playlists(this.playlistOffset)//this.playlistForm.value.playlistName
-        .then((response)=>{
-            var res = response.json().items;
-            let playlist_id : string = this.getPlaylist(this.playlistForm.value.playlistName, res);
-            const searchPromises: Promise<void>[] = [];
-            while (this.songsService.songSearches.length){
-              searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
-              this.songsService.songSearches.shift();
-            }
-            //Needs to wait until all requests ^ have been completed
-            Promise.all(searchPromises)
-              .then(() => {
-                    for(var i = 0; i < searchPromises.length; i += 100){//spotify only allows up to 100songs at once
-                      this.spotifyserv.add_tracks_to_playlist(i, playlist_id)
+    if(this.createNew){
+      this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
+      console.log(this.playlistForm.value.playlistName);
+      this.spotifyserv.create_playlist(this.playlistForm.value.playlistName)
+        .then(()=> {
+          this.spotifyserv.get_playlists(this.playlistOffset)//this.playlistForm.value.playlistName
+          .then((response)=>{
+              var res = response.json().items;
+              let playlist_id : string = this.getPlaylist(this.playlistForm.value.playlistName, res);
+              const searchPromises: Promise<void>[] = [];
+              while (this.songsService.songSearches.length){
+                searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
+                this.songsService.songSearches.shift();
+              }
+              //Needs to wait until all requests ^ have been completed
+              Promise.all(searchPromises)
+                .then(() => {
+                      for(var i = 0; i < searchPromises.length; i += 100){//spotify only allows up to 100songs at once
+                        this.spotifyserv.add_tracks_to_playlist(i, playlist_id)
+                      }
                     }
-                  }
-              );
+                );
+          })
         })
-      })
-    ;
+      ;
+    } else if(!this.createNew && this.selectedPlaylist){
+
+    }
   }
 
   onClear(){
