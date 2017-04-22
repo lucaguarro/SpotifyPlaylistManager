@@ -20,6 +20,8 @@ export class PlaylistFormComponent {
   ){}
   @ViewChild('f') playlistForm: NgForm;
   @ViewChild('fileContentInput') fileSelectedInput: ElementRef;
+
+  playlistOffset: number = 0;
   selectedOption: string;
   playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
@@ -38,13 +40,37 @@ export class PlaylistFormComponent {
     }
   }
 
+  getPlaylist(playlistName: string, playlists: any){
+    var songFound = false;
+    //let playlist_id : string; //0NvZ1eA6qo1jBk1BigahyX
+    for(var i = 0; i < playlists.length; i++){
+      if(playlists[i].name == playlistName){
+        songFound = true;
+        console.log("yoooo", playlists[i].id);
+        return playlists[i].id;
+      }
+    }
+    if(!songFound){
+      this.playlistOffset += 50;
+      //this.getPlaylist(playlistName, playlists, playlistOffset);
+      this.spotifyserv.get_playlist_by_name(this.playlistOffset).then((response)=>{
+        var res = response.json().items;
+        this.getPlaylist(this.playlistForm.value.playlistName, res);
+      });
+    }
+  }
+
   onSubmit(form: NgForm){
+
+
     this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
     console.log(this.playlistForm.value.playlistName);
     this.spotifyserv.create_playlist(this.playlistForm.value.playlistName)
       .then(()=> {
-        this.spotifyserv.get_playlist_by_name(this.playlistForm.value.playlistName)
-        .then(()=>{
+        this.spotifyserv.get_playlist_by_name(this.playlistOffset)//this.playlistForm.value.playlistName
+        .then((response)=>{
+            var res = response.json().items;
+            let playlist_id : string = this.getPlaylist(this.playlistForm.value.playlistName, res);
             const searchPromises: Promise<void>[] = [];
             while (this.songsService.songSearches.length){
               searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0]));
@@ -53,8 +79,8 @@ export class PlaylistFormComponent {
             //Needs to wait until all requests ^ have been completed
             Promise.all(searchPromises)
               .then(() => {
-                    for(var i = 0; i < searchPromises.length; i += 100){
-                      this.spotifyserv.add_tracks_to_playlist(i)
+                    for(var i = 0; i < searchPromises.length; i += 100){//spotify only allows up to 100songs at once
+                      this.spotifyserv.add_tracks_to_playlist(i, playlist_id)
                     }
                   }
               );

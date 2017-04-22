@@ -12,12 +12,11 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class SpotifyService {
   hash_params : Hash_Parameters;
-  playlistOffset : number = 0;
+  
   state_key : string = "spotify_auth_state";
   user_url  : string;
   user_id   : string;
-  playlist_id : string; //0NvZ1eA6qo1jBk1BigahyX
-  local_playlists : Array<{}>; // make a playlist object :>
+  //local_playlists : Array<{}>; // make a playlist object :>
   song;
   constructor(
     private http    : Http,
@@ -99,7 +98,7 @@ export class SpotifyService {
         }
       );
   }
-  get_playlists () {
+  /*get_playlists () {
     var songFound = false;
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + this.playlistOffset;
@@ -111,16 +110,16 @@ export class SpotifyService {
                           response.json().items;                    
                       })
                   .catch(this.handleError);
-  }
+  }*/
 
-  get_playlist_by_name (playlistName: string) {
+  get_playlist_by_name (playlistOffset: number) {
     var songFound = false;
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
-    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + this.playlistOffset;
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + playlistOffset;
     return this.http
                   .get(this.user_url, {headers : headers})
                   .toPromise()
-                  .then(
+                  /*.then(
                       (response) => {
                                   var res = response.json().items;
                                   console.log(res);
@@ -138,14 +137,14 @@ export class SpotifyService {
                                     this.get_playlist_by_name(playlistName);
                                   }
                                   
-                      })
+                      })*/
                   .catch(this.handleError);
   }
 
-    add_tracks_to_playlist(songOffset: number){
+    add_tracks_to_playlist(songOffset: number, playlist_id: string){
       var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
       headers.append('Accept', 'application/json');
-      this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.playlist_id + "/tracks"; 
+      this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + playlist_id + "/tracks"; 
       let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
       let songIDs : String [] = [];
       var numSongsToAdd;
