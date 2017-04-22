@@ -99,9 +99,21 @@ export class SpotifyService {
         }
       );
   }
+  get_playlists () {
+    var songFound = false;
+    var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + this.playlistOffset;
+    return this.http
+                  .get(this.user_url, {headers : headers})
+                  .toPromise()
+                  .then(
+                      (response) => {
+                          response.json().items;                    
+                      })
+                  .catch(this.handleError);
+  }
 
-
-  get_playlist (playlistName: string) {
+  get_playlist_by_name (playlistName: string) {
     var songFound = false;
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + this.playlistOffset;
@@ -123,7 +135,7 @@ export class SpotifyService {
                                   }
                                   if(!songFound){
                                     this.playlistOffset += 50;
-                                    this.get_playlist(playlistName);
+                                    this.get_playlist_by_name(playlistName);
                                   }
                                   
                       })

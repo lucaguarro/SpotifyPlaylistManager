@@ -43,7 +43,7 @@ export class PlaylistFormComponent {
     console.log(this.playlistForm.value.playlistName);
     this.spotifyserv.create_playlist(this.playlistForm.value.playlistName)
       .then(()=> {
-        this.spotifyserv.get_playlist(this.playlistForm.value.playlistName)
+        this.spotifyserv.get_playlist_by_name(this.playlistForm.value.playlistName)
         .then(()=>{
             const searchPromises: Promise<void>[] = [];
             while (this.songsService.songSearches.length){

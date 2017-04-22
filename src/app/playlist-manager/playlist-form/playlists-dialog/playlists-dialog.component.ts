@@ -1,3 +1,4 @@
+import { SpotifyService } from './../../../spotify.service';
 import { Component, OnInit } from '@angular/core';
 import {MdDialogRef} from '@angular/material';
 
@@ -8,9 +9,10 @@ import {MdDialogRef} from '@angular/material';
 })
 export class PlaylistsDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MdDialogRef<PlaylistsDialogComponent>) {}
+  constructor(public dialogRef: MdDialogRef<PlaylistsDialogComponent>, private spotifyserv: SpotifyService) {}
 
   ngOnInit() {
+    
   }
 
 }
