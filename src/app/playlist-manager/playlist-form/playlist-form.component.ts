@@ -47,13 +47,14 @@ export class PlaylistFormComponent {
       if(playlists[i].name == playlistName){
         songFound = true;
         console.log("yoooo", playlists[i].id);
+        this.playlistOffset = 0;
         return playlists[i].id;
       }
     }
     if(!songFound){
       this.playlistOffset += 50;
       //this.getPlaylist(playlistName, playlists, playlistOffset);
-      this.spotifyserv.get_playlist_by_name(this.playlistOffset).then((response)=>{
+      this.spotifyserv.get_playlists(this.playlistOffset).then((response)=>{
         var res = response.json().items;
         this.getPlaylist(this.playlistForm.value.playlistName, res);
       });
@@ -67,7 +68,7 @@ export class PlaylistFormComponent {
     console.log(this.playlistForm.value.playlistName);
     this.spotifyserv.create_playlist(this.playlistForm.value.playlistName)
       .then(()=> {
-        this.spotifyserv.get_playlist_by_name(this.playlistOffset)//this.playlistForm.value.playlistName
+        this.spotifyserv.get_playlists(this.playlistOffset)//this.playlistForm.value.playlistName
         .then((response)=>{
             var res = response.json().items;
             let playlist_id : string = this.getPlaylist(this.playlistForm.value.playlistName, res);

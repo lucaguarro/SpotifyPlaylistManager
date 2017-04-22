@@ -112,32 +112,13 @@ export class SpotifyService {
                   .catch(this.handleError);
   }*/
 
-  get_playlist_by_name (playlistOffset: number) {
+  get_playlists (playlistOffset: number) {
     var songFound = false;
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists" + "/?limit=50&offset=" + playlistOffset;
     return this.http
                   .get(this.user_url, {headers : headers})
                   .toPromise()
-                  /*.then(
-                      (response) => {
-                                  var res = response.json().items;
-                                  console.log(res);
-                                  console.log(res[0].name);
-                                  for(var i = 0; i < res.length; i++){
-                                    if(res[i].name == playlistName){
-                                      songFound = true;
-                                      this.playlistOffset = 0;
-                                      this.playlist_id = res[i].id;
-                                      console.log("yoooo", res[i].id);
-                                    }
-                                  }
-                                  if(!songFound){
-                                    this.playlistOffset += 50;
-                                    this.get_playlist_by_name(playlistName);
-                                  }
-                                  
-                      })*/
                   .catch(this.handleError);
   }
 

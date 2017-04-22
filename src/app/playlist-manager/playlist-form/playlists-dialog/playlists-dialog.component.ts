@@ -1,3 +1,4 @@
+import { Playlist } from './../../../shared/playlist.model';
 import { SpotifyService } from './../../../spotify.service';
 import { Component, OnInit } from '@angular/core';
 import {MdDialogRef} from '@angular/material';
@@ -8,11 +9,21 @@ import {MdDialogRef} from '@angular/material';
   styleUrls: ['./playlists-dialog.component.css']
 })
 export class PlaylistsDialogComponent implements OnInit {
-
+  playlistOffset: number = 0;
+  playlists: Playlist [] = [];
   constructor(public dialogRef: MdDialogRef<PlaylistsDialogComponent>, private spotifyserv: SpotifyService) {}
 
   ngOnInit() {
-    
+    this.spotifyserv.get_playlists(this.playlistOffset).then(
+      (response)=>{
+        var res = response.json().items;
+        console.log(res);
+        for(var i = 0; i < res.length; i++){
+          let playlist: Playlist = new Playlist(res[i].name, res[i].id);
+          this.playlists.push(playlist);
+        }
+      }
+    );  
   }
 
 }
