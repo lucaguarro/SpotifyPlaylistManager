@@ -31,6 +31,12 @@ export class PlaylistFormComponent {
       this.selectedOption = result;
     });
   }
+  radioChanged(option: string){
+    console.log("uo", option);
+    if(option == "Append to existing"){
+      this.openDialog();
+    }
+  }
 
   onSubmit(form: NgForm){
     this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);

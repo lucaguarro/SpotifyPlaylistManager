@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import {MaterialModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -18,7 +21,7 @@ import { SongsService } from './shared/songs.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './about/about.component';
 import { SelectedSongDefaultComponent } from './playlist-manager/selected-song-default/selected-song-default.component';
-
+import { PlaylistsDialogComponent } from './playlist-manager/playlist-form/playlists-dialog/playlists-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +35,17 @@ import { SelectedSongDefaultComponent } from './playlist-manager/selected-song-d
     SongItemComponent,
     AboutComponent,
     SelectedSongDefaultComponent,
+    PlaylistsDialogComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
+    MaterialModule,
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule
   ],
+  entryComponents: [PlaylistsDialogComponent],
   providers: [AuthService, AuthGuard, SpotifyService, SongsService],
   bootstrap: [AppComponent]
 })
