@@ -28,11 +28,16 @@ export class PlaylistFormComponent {
   playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
   fileEvent: Event;
-
+  openDialogIfButton(){
+    if(!this.createNew){
+      this.openDialog();
+    }
+  }
   openDialog() {
     let dialogRef = this.dialog.open(PlaylistsDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if(result){
+        console.log(result);
         this.selectedPlaylist = result;
         this.playlistForm.value.playlistName = this.selectedPlaylist.title;
       }
@@ -41,6 +46,7 @@ export class PlaylistFormComponent {
   radioChanged(option: string){
     console.log("uo", option);
     if(option == "Append to existing"){
+      this.selectedPlaylist = new Playlist('','');
       this.createNew = false;
       this.openDialog();
     } else{

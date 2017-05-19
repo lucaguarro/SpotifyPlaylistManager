@@ -19,7 +19,8 @@
         
               <input
                   id="inputPlaylistName"
-                  type="text"
+                  [type]="createNew ? 'text' : 'button'"
+                  (click)="openDialogIfButton()"
                   class="form-control swagoo"              
                   [(ngModel)]="selectedPlaylist.title"
                   name="playlistName"
