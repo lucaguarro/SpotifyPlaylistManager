@@ -32,12 +32,9 @@ export class PlaylistFormComponent {
   openDialog() {
     let dialogRef = this.dialog.open(PlaylistsDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.selectedPlaylist = result;
-      if(this.selectedPlaylist){
-        console.log("kobeee");
-        console.log("before", this.playlistForm.value.playlistName);
+      if(result){
+        this.selectedPlaylist = result;
         this.playlistForm.value.playlistName = this.selectedPlaylist.title;
-        console.log("after", this.playlistForm.value.playlistName);
       }
     });
   }
