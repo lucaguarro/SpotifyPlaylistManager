@@ -76,6 +76,21 @@ export class PlaylistFormComponent {
     }
   }
 
+  searchAndAddTracksToPlaylist(playlistID: string){
+      const searchPromises: Promise<void>[] = [];
+      while (this.songsService.songSearches.length){
+        searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0])); //Search for each track and create a promise for it
+        this.songsService.songSearches.shift();
+      }
+      Promise.all(searchPromises) //Once all searches have been processed, then
+        .then(() => {
+              for(var i = 0; i < searchPromises.length; i += 100){ //spotify only allows up to 100songs at once
+                this.spotifyserv.add_tracks_to_playlist(i, playlistID) //Add tracks to newly created playlist
+              }
+            }
+        );
+  }
+
   onSubmit(form: NgForm){
 
     if(this.createNew){
@@ -87,37 +102,14 @@ export class PlaylistFormComponent {
           .then((response)=>{
               var res = response.json().items;
               let playlist_id : string = this.getPlaylist(this.playlistForm.value.playlistName, res); //Get the playlist's id that we just created
-              const searchPromises: Promise<void>[] = [];
-              while (this.songsService.songSearches.length){
-                searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0])); //Search for each track and create a promise for it
-                this.songsService.songSearches.shift();
-              }
-              Promise.all(searchPromises) //Once all searches have been processed, then
-                .then(() => {
-                      for(var i = 0; i < searchPromises.length; i += 100){ //spotify only allows up to 100songs at once
-                        this.spotifyserv.add_tracks_to_playlist(i, playlist_id) //Add tracks to newly created playlist
-                      }
-                    }
-                );
+              this.searchAndAddTracksToPlaylist(playlist_id);
           })
         })
       ;
     } else if(!this.createNew && this.selectedPlaylist){
         this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
         let playlist_id = this.selectedPlaylist.id;
-        console.log("My man", playlist_id);
-        const searchPromises: Promise<void>[] = [];
-        while (this.songsService.songSearches.length){
-          searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0])); //Search for each track and create a promise for it
-          this.songsService.songSearches.shift();
-        }
-        Promise.all(searchPromises) //Once all searches have been processed, then
-          .then(() => {
-                for(var i = 0; i < searchPromises.length; i += 100){ //spotify only allows up to 100songs at once
-                  this.spotifyserv.add_tracks_to_playlist(i, playlist_id) //Add tracks to newly created playlist
-                }
-              }
-          );
+        this.searchAndAddTracksToPlaylist(playlist_id);
     }
   }
 
