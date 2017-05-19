@@ -24,7 +24,7 @@ export class PlaylistFormComponent {
 
   createNew: boolean = true;
   playlistOffset: number = 0;
-  selectedPlaylist: Playlist;
+  selectedPlaylist: Playlist = new Playlist('','');
   playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
   fileEvent: Event;
@@ -35,7 +35,9 @@ export class PlaylistFormComponent {
       this.selectedPlaylist = result;
       if(this.selectedPlaylist){
         console.log("kobeee");
+        console.log("before", this.playlistForm.value.playlistName);
         this.playlistForm.value.playlistName = this.selectedPlaylist.title;
+        console.log("after", this.playlistForm.value.playlistName);
       }
     });
   }
@@ -46,6 +48,7 @@ export class PlaylistFormComponent {
       this.openDialog();
     } else{
       this.createNew = true;
+      this.selectedPlaylist = new Playlist('','');
     }
   }
 

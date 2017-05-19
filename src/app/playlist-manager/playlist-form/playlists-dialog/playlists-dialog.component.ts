@@ -28,9 +28,4 @@ export class PlaylistsDialogComponent implements OnInit {
       }
     );  
   }
-
-  setPlaylist(playlistId: string){
-    console.log(playlistId);
-  }
-
 }
