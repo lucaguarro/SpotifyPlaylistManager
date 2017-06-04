@@ -29,7 +29,7 @@ export class PlaylistFormComponent {
   playlistRadios: string[] = ["Create new", "Append to existing"];
   fileSelected: string = "No file selected";
   fileEvent: Event;
-  openDialogIfButton(){
+  openDialogIfButton(){ //This is executed for when the playlist name box turns into a button
     if(!this.createNew){
       this.openDialog();
     }

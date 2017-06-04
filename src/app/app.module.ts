@@ -1,3 +1,4 @@
+import { RedTrashDirective } from './playlist-manager/songs-added/song-item/red-trash.directive';
 import { SpotifyService } from './spotify.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -36,6 +37,7 @@ import { PlaylistsDialogComponent } from './playlist-manager/playlist-form/playl
     AboutComponent,
     SelectedSongDefaultComponent,
     PlaylistsDialogComponent,
+    RedTrashDirective
   ],
   imports: [
     BrowserAnimationsModule,

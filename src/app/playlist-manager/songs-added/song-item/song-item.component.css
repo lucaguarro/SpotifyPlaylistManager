@@ -1,0 +1,10 @@
+.trash{
+    display: inline;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    margin-right: 8px;
+}
+
+.redTrash{
+    color: red;
+}
