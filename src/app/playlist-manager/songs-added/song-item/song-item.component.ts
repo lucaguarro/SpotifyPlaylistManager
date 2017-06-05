@@ -13,4 +13,9 @@ export class SongItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  deleteSong(event){
+    event.stopPropagation();
+    console.log("ayyy 2pac");
+  }
+
 }
