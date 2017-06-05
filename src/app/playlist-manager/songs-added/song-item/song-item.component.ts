@@ -24,7 +24,9 @@ export class SongItemComponent implements OnInit {
     event.stopPropagation();
     console.log("ayyy 2pac", this.song.title);
     this.songserv.removeSong(this.index);
-    this.spotifyserv.deleteSong(this.song.spotifyID);
+    if(this.song.spotifyID !== "Song not found"){
+      this.spotifyserv.deleteSong(this.song.spotifyID);
+    }
   }
 
 }
