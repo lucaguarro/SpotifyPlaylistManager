@@ -128,11 +128,11 @@ export class SpotifyService {
                   .catch(this.handleError);
   }
 
-  add_tracks_to_playlist(songOffset: number, playlist_id: string){
+  add_tracks_to_playlist(songOffset: number){
     var headers = new Headers({'Authorization': 'Bearer ' + this.hash_params.access_token});
     headers.append('Accept', 'application/json');
-    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + playlist_id + "/tracks"; 
-    let songs: Song[] = this.songsService.getSongs(); //playlist_id is hardcoded rn. needs to be added dynamically
+    this.user_url = "https://api.spotify.com/v1/users/" + this.user_id + "/playlists/" + this.currentPlaylistID + "/tracks"; 
+    let songs: Song[] = this.songsService.getSongs();
     let songIDs : String [] = [];
     var numSongsToAdd;
     if((songs.length - songOffset) > 100){

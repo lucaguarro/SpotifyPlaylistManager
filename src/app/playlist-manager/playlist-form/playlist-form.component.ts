@@ -77,7 +77,7 @@ export class PlaylistFormComponent {
     }
   }
 
-  searchAndAddTracksToPlaylist(playlistID: string){
+  searchAndAddTracksToPlaylist(){
       const searchPromises: Promise<void>[] = [];
       while (this.songsService.songSearches.length){
         searchPromises.push(this.spotifyserv.searchTrack(this.songsService.songSearches[0])); //Search for each track and create a promise for it
@@ -86,7 +86,7 @@ export class PlaylistFormComponent {
       Promise.all(searchPromises) //Once all searches have been processed, then
         .then(() => {
               for(var i = 0; i < searchPromises.length; i += 100){ //spotify only allows up to 100songs at once
-                this.spotifyserv.add_tracks_to_playlist(i, playlistID) //Add tracks to newly created playlist
+                this.spotifyserv.add_tracks_to_playlist(i) //Add tracks to newly created playlist
               }
             }
         );
@@ -102,16 +102,15 @@ export class PlaylistFormComponent {
           this.spotifyserv.get_playlists(this.playlistOffset) //Get all playlists in users account
           .then((response)=>{
               var res = response.json().items;
-              let playlist_id : string = this.getPlaylist(this.playlistForm.value.playlistName, res); //Get the playlist's id that we just created
-              this.searchAndAddTracksToPlaylist(playlist_id);
+              this.spotifyserv.currentPlaylistID = this.getPlaylist(this.playlistForm.value.playlistName, res); //Get the playlist's id that we just created
+              this.searchAndAddTracksToPlaylist();
           })
         })
       ;
     } else if(!this.createNew && this.selectedPlaylist){
         this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
-        let playlist_id = this.selectedPlaylist.id;
-        this.spotifyserv.currentPlaylistID = playlist_id;
-        this.searchAndAddTracksToPlaylist(playlist_id);
+        this.spotifyserv.currentPlaylistID = this.selectedPlaylist.id;
+        this.searchAndAddTracksToPlaylist();
     }
   }
 
