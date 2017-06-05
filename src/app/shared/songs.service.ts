@@ -23,6 +23,10 @@ export class SongsService {
     return this.songs.slice();
   }
 
+  removeSong(index : number){
+    this.songs.splice(index, 1);
+    this.songsChanged.next(this.songs);
+  }
 //get song to selected-song-view
   getSong(index: number){
     return this.songs[index];

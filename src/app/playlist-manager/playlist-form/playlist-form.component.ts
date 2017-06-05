@@ -56,17 +56,18 @@ export class PlaylistFormComponent {
   }
 
   getPlaylist(playlistName: string, playlists: any){
-    var songFound = false;
+    var playlistFound = false;
     //let playlist_id : string; //0NvZ1eA6qo1jBk1BigahyX
     for(var i = 0; i < playlists.length; i++){
       if(playlists[i].name == playlistName){
-        songFound = true;
+        playlistFound = true;
+        this.spotifyserv.currentPlaylistID = playlists[i].id;
         console.log("yoooo", playlists[i].id);
         this.playlistOffset = 0;
         return playlists[i].id;
       }
     }
-    if(!songFound){
+    if(!playlistFound){
       this.playlistOffset += 50;
       //this.getPlaylist(playlistName, playlists, playlistOffset);
       this.spotifyserv.get_playlists(this.playlistOffset).then((response)=>{
@@ -109,6 +110,7 @@ export class PlaylistFormComponent {
     } else if(!this.createNew && this.selectedPlaylist){
         this.songsService.playlistCreated.emit(this.playlistForm.value.playlistName);
         let playlist_id = this.selectedPlaylist.id;
+        this.spotifyserv.currentPlaylistID = playlist_id;
         this.searchAndAddTracksToPlaylist(playlist_id);
     }
   }
