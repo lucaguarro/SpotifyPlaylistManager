@@ -1,3 +1,4 @@
+import { PlayPauseDirective } from './playlist-manager/songs-added/song-item/play-pause.directive';
 import { RedTrashDirective } from './playlist-manager/songs-added/song-item/red-trash.directive';
 import { SpotifyService } from './spotify.service';
 import { BrowserModule } from '@angular/platform-browser';

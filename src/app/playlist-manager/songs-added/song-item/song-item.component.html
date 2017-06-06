@@ -3,8 +3,12 @@
   style="cursor: pointer;"
   [routerLink]="[index]"
   routerLinkActive="active"
-  class="list-group-item clearfix"
+  class="list-group-item clearfix makeRelative"
   >
+  <span class="pressPlay" (click)="playPauseSong($event); false">
+    <i playPause class="fa fa-play-circle" aria-hidden="true" style="font-size: 40px"></i>
+  </span>
+
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ song.title }}</h4>
     <p class="list-group-item-text">{{ song.artist }}</p>

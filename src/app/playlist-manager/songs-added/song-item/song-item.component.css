@@ -9,3 +9,16 @@
     color: red;
 }
 
+.pressPlay{
+  margin-right:15px;
+  float:left;
+vertical-align: middle;
+}
+
+.hide{
+   display: none; /* OR */  
+}
+
+.makeRelative{
+    position: relative;
+}

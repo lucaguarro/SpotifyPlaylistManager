@@ -11,6 +11,7 @@ import { Song } from '../../../shared/song.model';
 export class SongItemComponent implements OnInit {
   @Input() song: Song;
   @Input() index: number;
+  playing: Boolean = false;
 
   constructor(
     private spotifyserv : SpotifyService,
@@ -27,6 +28,11 @@ export class SongItemComponent implements OnInit {
     if(this.song.spotifyID !== "Song not found"){
       this.spotifyserv.deleteSong(this.song.spotifyID);
     }
+  }
+
+  playPauseSong(event){
+    event.stopPropagation();
+    console.log("ayyy 2pac", this.song.title);
   }
 
 }
