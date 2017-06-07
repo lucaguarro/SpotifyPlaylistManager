@@ -38,7 +38,8 @@ import { PlaylistsDialogComponent } from './playlist-manager/playlist-form/playl
     AboutComponent,
     SelectedSongDefaultComponent,
     PlaylistsDialogComponent,
-    RedTrashDirective
+    RedTrashDirective,
+    PlayPauseDirective
   ],
   imports: [
     BrowserAnimationsModule,
