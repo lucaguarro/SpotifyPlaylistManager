@@ -1,8 +1,21 @@
 # PlaylistManager
+This is a web application that allows the user to generate a spotify playlist from a list of songs in a txt file.
+Built during UCLA's 2017 Hackathon
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+## Developers
+- Gianluca Guarro
+- David Carranza
 
-## Development server
+![Sample](./readme_resources/playlistantPreview.gif)
+
+## Implementation
+- Text parsing to retrieve songs/artists
+- OAuth flow with spotify
+- Usage of Spotify API (create/delete playlists, add/remove songs to/from playlist)
+- Graphical user interface (GUI)
+
+
+<!-- ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
@@ -28,4 +41,4 @@ Before running the tests make sure you are serving the app via `ng serve`.
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 Also David was here :>
-
+ -->
